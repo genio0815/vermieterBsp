@@ -66,7 +66,7 @@ class Vermieter: protected Person {
 
 	private:
 		double income;
-		vector<MietObject> ownedFlats;
+		//vector<MietObject> ownedFlats;
 };
 
 class Mieter: protected Person {
