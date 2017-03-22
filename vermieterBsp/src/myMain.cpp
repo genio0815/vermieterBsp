@@ -1,5 +1,4 @@
 /*
-/*
  * myMain.cpp
  *
  *  Created on: Mar 21, 2017
@@ -15,9 +14,6 @@ using namespace std;
 
 class Person {
 	public:
-
-		Person(){}
-
 		Person(const std::string& name, unsigned int age){
 			setName(name);
 			setAge(age);
@@ -70,12 +66,12 @@ class Vermieter: protected Person {
 
 	private:
 		double income;
+		vector<MietObject> ownedFlats;
 };
 
 class Mieter: protected Person {
 	public:
 		Mieter(const std::string& name, unsigned int age) : Person(name,age) {
-			cout<<"doe"<<endl;
 			expenses = 0.0;
 		}
 
@@ -86,14 +82,90 @@ class Mieter: protected Person {
 		void setExpenses(double expenses) {
 			this->expenses = expenses;
 		}
+
 		void printToScreen() const {
 			Person::printToScreen();
 			cout<<"expenses:\t"<<getExpenses()<<endl;
 		}
 
+	const string& getMovingInDate() const {
+		return movingInDate;
+	}
+
+	void setMovingInDate(const string& movingInDate) {
+		this->movingInDate = movingInDate;
+	}
+
 	private:
 		double expenses;
+		string movingInDate;
 };
+
+class MietObject {
+	public:
+		double getPrize() const {
+			return prize;
+		}
+
+		void setPrize(double prize) {
+			this->prize = prize;
+		}
+
+		double getSize() const {
+			return size;
+		}
+
+		void setSize(double size) {
+			this->size = size;
+		}
+
+	const string& getAdress() const {
+		return adress;
+	}
+
+	void setAdress(const string& adress) {
+		this->adress = adress;
+	}
+
+	protected:
+		double prize;
+		double size;
+		string adress;
+
+};
+
+class Haus: MietObject {
+public:
+	const string& getConstuctionDate() const {
+		return constuctionDate;
+	}
+
+	void setConstuctionDate(const string& constuctionDate) {
+		this->constuctionDate = constuctionDate;
+	}
+
+	unsigned int getFloors() const {
+		return floors;
+	}
+
+	void setFloors(unsigned int floors) {
+		this->floors = floors;
+	}
+
+	bool isHasCellar() const {
+		return hasCellar;
+	}
+
+	void setHasCellar(bool hasCellar) {
+		this->hasCellar = hasCellar;
+	}
+
+	private:
+		unsigned int floors;
+		bool hasCellar;
+		string constuctionDate;
+};
+
 
 int main() {
 	cout<<"vermieter bsp"<<endl;
