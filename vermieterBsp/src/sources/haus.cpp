@@ -5,7 +5,7 @@
  *      Author: alex
  */
 
-#include "../header/Haus.h"
+#include "../includes/Haus.h"
 
 
 Haus::Haus() : MietObject() {

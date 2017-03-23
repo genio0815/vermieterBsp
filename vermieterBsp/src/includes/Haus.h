@@ -5,10 +5,10 @@
  *      Author: alex
  */
 
-#ifndef SRC_HEADER_HAUS_H_
-#define SRC_HEADER_HAUS_H_
+#ifndef SRC_INCLUDES_HAUS_H_
+#define SRC_INCLUDES_HAUS_H_
 
-#include "../header/MietObject.h"
+#include "../includes/MietObject.h"
 
 class Haus: public MietObject {
 	public:
@@ -27,4 +27,4 @@ class Haus: public MietObject {
 };
 
 
-#endif /* SRC_HEADER_HAUS_H_ */
+#endif

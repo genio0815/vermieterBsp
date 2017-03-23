@@ -5,12 +5,12 @@
  *      Author: alex
  */
 
-#ifndef SRC_HEADER_VERMIETER_H_
-#define SRC_HEADER_VERMIETER_H_
+#ifndef SRC_INCLUDES_VERMIETER_H_
+#define SRC_INCLUDES_VERMIETER_H_
 
 #include <vector>
-#include "../header/Person.h"
-#include "../header/MietObject.h"
+#include "../includes/Person.h"
+#include "../includes/MietObject.h"
 
 class Vermieter: protected Person {
 	public:
@@ -29,4 +29,4 @@ class Vermieter: protected Person {
 		std::vector<MietObject> ownedFlats;
 };
 
-#endif /* SRC_HEADER_VERMIETER_H_ */
+#endif

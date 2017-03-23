@@ -5,10 +5,10 @@
  *      Author: alex
  */
 
-#ifndef SRC_HEADER_MIETER_H_
-#define SRC_HEADER_MIETER_H_
+#ifndef SRC_INCLUDES_MIETER_H_
+#define SRC_INCLUDES_MIETER_H_
 
-#include "../header/Person.h"
+#include "../includes/Person.h"
 
 class Mieter: protected Person {
 	public:
@@ -25,4 +25,3 @@ class Mieter: protected Person {
 };
 
 #endif
-/* SRC_HEADER_MIETER_H_ */

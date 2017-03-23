@@ -5,8 +5,8 @@
  *      Author: alex
  */
 
-#include "../header/Vermieter.h"
 #include <algorithm>
+#include "../includes/Vermieter.h"
 
 Vermieter::Vermieter(const std::string& name, unsigned int age) : Person(name,age) {
 	income = 0.0;

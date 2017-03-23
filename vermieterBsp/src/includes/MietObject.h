@@ -5,8 +5,8 @@
  *      Author: alex
  */
 
-#ifndef SRC_HEADER_MIETOBJECT_H_
-#define SRC_HEADER_MIETOBJECT_H_
+#ifndef SRC_INCLUDES_MIETOBJECT_H_
+#define SRC_INCLUDES_MIETOBJECT_H_
 
 #include <iostream>
 #include <string>
@@ -28,4 +28,4 @@ class MietObject {
 };
 
 
-#endif /* SRC_HEADER_MIETOBJECT_H_ */
+#endif

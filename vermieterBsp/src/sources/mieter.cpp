@@ -5,7 +5,7 @@
  *      Author: alex
  */
 
-#include "../header/Mieter.h"
+#include "../includes/Mieter.h"
 
 Mieter::Mieter(const std::string& name, unsigned int age) : Person(name,age) {
 	expenses = 0.0;

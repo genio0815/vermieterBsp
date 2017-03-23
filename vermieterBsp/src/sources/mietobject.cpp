@@ -5,7 +5,7 @@
  *      Author: alex
  */
 
-#include "../header/MietObject.h"
+#include "../includes/MietObject.h"
 
 MietObject::MietObject(){
 }

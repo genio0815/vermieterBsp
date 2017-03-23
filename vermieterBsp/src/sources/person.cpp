@@ -6,7 +6,7 @@
  */
 
 
-#include "../header/Person.h"
+#include "../includes/Person.h"
 
 Person::Person(const std::string& name, unsigned int age){
 	setName(name);

@@ -5,8 +5,8 @@
  *      Author: alex
  */
 
-#ifndef HEADER_PERSON_H_
-#define HEADER_PERSON_H_
+#ifndef INCLUDES_PERSON_H_
+#define INCLUDES_PERSON_H_
 
 #include <iostream>
 #include <string>
@@ -24,4 +24,4 @@ class Person {
 		unsigned int age;
 };
 
-#endif /* HEADER_PERSON_H_ */
+#endif
