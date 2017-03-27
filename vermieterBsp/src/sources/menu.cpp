@@ -11,6 +11,12 @@ BaseMenu::BaseMenu() {
 	this->m_MenuText = "This shouldn't ever be shown!";
 }
 
+void BaseMenu::printText(std::vector<std::string> choices) {
+	for (auto e : choices) {
+		std::cout<<e<<std::endl;
+	}
+}
+
 FirstMenu::FirstMenu() : BaseMenu() {
 	m_MenuText = "Main Menu\n"
 				 "Please make your selection\n"

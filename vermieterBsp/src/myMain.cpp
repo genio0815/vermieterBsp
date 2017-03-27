@@ -6,8 +6,8 @@
  */
 
 #include "includes/Haus.h"
-#include "includes/Mieter.h"
 #include "includes/MietObject.h"
+#include "includes/Mieter.h"
 #include "includes/Person.h"
 #include "includes/Vermieter.h"
 #include "includes/Menu.h"
@@ -20,6 +20,8 @@ using namespace std;
 
 
 int main() {
+
+	vector<string> methods = {"dawoi", "nu", "ane"};
 
 	BaseMenu* aCurrentMenu = new FirstMenu; // We have a pointer to our menu. We're using a pointer so we can change the menu seamlessly.
 	bool isQuitOptionSelected = false;

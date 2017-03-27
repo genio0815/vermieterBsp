@@ -9,6 +9,7 @@
 #define SRC_INCLUDES_VERMIETER_H_
 
 #include <vector>
+
 #include "../includes/Person.h"
 #include "../includes/MietObject.h"
 
@@ -18,7 +19,7 @@ class Vermieter: protected Person {
 		double getIncome() const;
 		void setIncome(double income);
 		void printToScreen();
-		void addFlat(const MietObject);
+		void addFlat(MietObject);
 		void removeFlatByIndex(int index);
 		int numberFlat();
 

@@ -26,5 +26,4 @@ class Haus: public MietObject {
 		std::string constuctionDate;
 };
 
-
 #endif

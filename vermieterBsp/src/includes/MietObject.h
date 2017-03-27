@@ -1,15 +1,25 @@
-/*
- * MietObject.h
- *
- *  Created on: Mar 22, 2017
- *      Author: alex
- */
+///*
+// * MietObject.h
+// *
+// *  Created on: Mar 22, 2017
+// *      Author: alex
+// */
+//
+//#ifndef SRC_INCLUDES_MIETOBJECT_H_
+//#define SRC_INCLUDES_MIETOBJECT_H_
+//
 
-#ifndef SRC_INCLUDES_MIETOBJECT_H_
-#define SRC_INCLUDES_MIETOBJECT_H_
+
+////#include "../includes/Mieter.h"
+
+#pragma once
 
 #include <iostream>
 #include <string>
+
+// forward declarations
+class Vermieter;
+class Mieter;
 
 class MietObject {
 	public:
@@ -20,12 +30,17 @@ class MietObject {
 		void setSize(double size);
 		const std::string& getAdress() const;
 		void setAdress(const std::string& adress);
+		Vermieter getOwner();
+		Mieter getRenter();
+		void setOwner(Vermieter own);
+		void setRenter(Mieter rent);
 
 	protected:
 		double prize;
 		double size;
+		Vermieter owner();
+		Mieter renter();
 		std::string adress;
 };
 
-
-#endif
+//#endif

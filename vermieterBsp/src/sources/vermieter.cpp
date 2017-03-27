@@ -27,7 +27,7 @@ void Vermieter::printToScreen() {
 	std::cout<<"income:\t"<<getIncome()<<std::endl;
 	std::cout<<"number of flats:\t"<<numberFlat()<<std::endl;
 }
-void Vermieter::addFlat(const MietObject newFlat) {
+void Vermieter::addFlat(MietObject newFlat) {
 	this->ownedFlats.push_back(newFlat);
 }
 void Vermieter::removeFlatByIndex(int index) {

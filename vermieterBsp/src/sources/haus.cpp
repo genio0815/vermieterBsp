@@ -9,6 +9,8 @@
 
 
 Haus::Haus() : MietObject() {
+	this->hasCellar = false;
+	this->floors = 0;
 }
 
 const std::string& Haus::getConstuctionDate() const {

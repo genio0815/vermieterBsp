@@ -8,6 +8,8 @@
 #include "../includes/MietObject.h"
 
 MietObject::MietObject(){
+//	this->setPrize(0.0);
+//	this->setSize(0.0);
 }
 
 double MietObject::getPrize() const {
@@ -29,5 +31,18 @@ void MietObject::setAdress(const std::string& adress) {
 	this->adress = adress;
 }
 
-
-
+//Vermieter MietObject::getOwner() {
+//	return this->owner;
+//}
+//
+//Mieter MietObject::getRenter() {
+//	return this->renter;
+//}
+//
+//void MietObject::setOwner(Vermieter own) {
+//	this->owner = own;
+//}
+//
+//void MietObject::setRenter(Mieter rent) {
+//	this->renter = rent;
+//}
