@@ -21,15 +21,13 @@ using namespace std;
 
 int main() {
 
-	vector<string> methods = {"dawoi", "nu", "ane"};
-
-	BaseMenu* aCurrentMenu = new FirstMenu; // We have a pointer to our menu. We're using a pointer so we can change the menu seamlessly.
+	BaseMenu* aCurrentMenu = new MainMenu;
 	bool isQuitOptionSelected = false;
-	while (!isQuitOptionSelected) // We're saying that, as long as the quit option wasn't selected, we keep running
+	while (!isQuitOptionSelected)
 	{
-		aCurrentMenu->printText(); // This will call the method of whichever MenuObject we're using, and print the text we want to display
+		aCurrentMenu->printText();
 
-		int choice = 0; // Always initialise variables, unless you're 100% sure you don't want to.
+		int choice = 0;
 		cin >> choice;
 
 		if (cin.fail()) {
@@ -37,15 +35,14 @@ int main() {
 			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // remove all if entered more than 1 letter
 		}
 
-		BaseMenu* aNewMenuPointer = aCurrentMenu->getNextMenu(choice, isQuitOptionSelected); // This will return a new object, of the type of the new menu we want. Also checks if quit was selected
+		BaseMenu* aNewMenuPointer = aCurrentMenu->getNextMenu(choice, isQuitOptionSelected);
 
-		if (aNewMenuPointer) // This is why we set the pointer to 0 when we were creating the new menu - if it's 0, we didn't create a new menu, so we will stick with the old one
+		if (aNewMenuPointer)
 		{
-			delete aCurrentMenu; // We're doing this to clean up the old menu, and not leak memory.
-			aCurrentMenu = aNewMenuPointer; // We're updating the 'current menu' with the new menu we just created
+			delete aCurrentMenu; // no memory leaks
+			aCurrentMenu = aNewMenuPointer;
 		}
 	}
-
 
 	vector<Person> persons;
 	vector<MietObject> accomodations;

@@ -7,44 +7,67 @@
 
 #include "../includes/Menu.h"
 
+std::vector<std::string> mainOpts = {"Persons Submenu", "Flats Submenu", "Quit"};
+std::vector<std::string> flatOpts = {"list flats", "add flat", "return to main menu", "quit"};
+std::vector<std::string> personOpts = {"list persons", "add person", "return to main menu", "quit"};
+
 BaseMenu::BaseMenu() {
-	this->m_MenuText = "This shouldn't ever be shown!";
 }
 
-void BaseMenu::printText(std::vector<std::string> choices) {
-	for (auto e : choices) {
-		std::cout<<e<<std::endl;
+void BaseMenu::printText() {
+	std::cout<< "Please make your selection\n"<<std::endl;
+	short choice = 0;
+	for (auto &e : *optPt) {
+		std::cout<<++choice<<'\t'<<e<<std::endl;
 	}
 }
 
-FirstMenu::FirstMenu() : BaseMenu() {
-	m_MenuText = "Main Menu\n"
-				 "Please make your selection\n"
-				 "1 - List Persons\n"
-				 "2 - List Accommodations\n"
-				 "3 - Quit\n"
-				 "Selection: ";
+MainMenu::MainMenu() : BaseMenu() {
+	this->optPt = &mainOpts;
 }
 
-BaseMenu * FirstMenu::getNextMenu(int choice, bool& iIsQuitOptionSelected) {
+BaseMenu * MainMenu::getNextMenu(int choice, bool& iIsQuitOptionSelected) {
 	BaseMenu *aNewMenu = 0;
 	switch (choice) {
-
-		case 0:
-		{
-			std::cout<<"invalid choice"<<std::endl;
-		}
-		break;
+		case 1:
+			aNewMenu = new PersonsMenu;
+			break;
 		case 2:
-		{
-			aNewMenu = new SecondMenu;
-		}
-		break;
+			aNewMenu = new FlatsMenu;
+			break;
 		case 3:
-		{
 			iIsQuitOptionSelected = true;
-		}
-		break;
+			break;
+		default: {
+			std::cout<<"unrecognized input"<<std::endl;
+			}
+	}
+	return aNewMenu;
+}
+
+PersonsMenu::PersonsMenu() : BaseMenu() {
+	this->optPt = &personOpts;
+}
+
+BaseMenu * PersonsMenu::getNextMenu(int choice, bool& iIsQuitOptionSelected) {
+	BaseMenu *aNewMenu = 0;
+	switch (choice) {
+		case 0:
+			std::cout<<"invalid choice"<<std::endl;
+			break;
+		case 1:
+			std::cout<<"i will list persons"<<std::endl;
+			break;
+		case 2:
+			std::cout<<"i will add person"<<std::endl;
+			break;
+		case 3:
+			std::cout<<"return to main menu"<<std::endl;
+			aNewMenu = new MainMenu;
+			break;
+		case 4:
+			iIsQuitOptionSelected = true;
+			break;
 		default:
 		{
 			// Do nothing - we won't change the menu
@@ -53,28 +76,30 @@ BaseMenu * FirstMenu::getNextMenu(int choice, bool& iIsQuitOptionSelected) {
 	return aNewMenu;
 }
 
-SecondMenu::SecondMenu() : BaseMenu(){
-	m_MenuText = "OptionsMenu\n"
-				 "Please make your selection\n"
-				 "1 - return to main menu\n"
-				 "2 - ha?";
+FlatsMenu::FlatsMenu() : BaseMenu(){
+	this->optPt = &flatOpts;
 }
 
-BaseMenu * SecondMenu::getNextMenu(int choice, bool& iIsQuitOptionSelected) {
+BaseMenu * FlatsMenu::getNextMenu(int choice, bool& iIsQuitOptionSelected) {
 	BaseMenu *aNewMenu = 0;
 	switch (choice)
 	{
+		case 0:
+			std::cout<<"invalid choice"<<std::endl;
+			break;
 		case 1:
-		{
-			aNewMenu = new FirstMenu;
-		}
-		break;
+			std::cout<<"i will list flats"<<std::endl;
+			break;
 		case 2:
-		{
-			aNewMenu = new FirstMenu;
-		}
-		break;
-
+			std::cout<<"i will add flat"<<std::endl;
+			break;
+		case 3:
+			std::cout<<"return to main menu"<<std::endl;
+			aNewMenu = new MainMenu;
+			break;
+		case 4:
+			iIsQuitOptionSelected = true;
+			break;
 		default:
 		{
 			// Do nothing - we won't change the menu
