@@ -11,12 +11,13 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory> // for unique_ptr
 
 class BaseMenu {
 	public:
 		BaseMenu();
 		virtual ~BaseMenu() { }
-		virtual BaseMenu *getNextMenu(int iChoice, bool& iIsQuitOptionSelected) = 0;
+		virtual std::unique_ptr<BaseMenu> getNextMenu(int iChoice, bool& iIsQuitOptionSelected) = 0;
 		void printText();
 
 //		virtual void printText() // This is made virtual, but doesn't *have* to be redefined. In the current code I have written, it is not redefined as we store the menu text as a string in the object
@@ -32,19 +33,19 @@ class BaseMenu {
 class MainMenu : public BaseMenu {
 	public:
 		MainMenu();
-		BaseMenu *getNextMenu(int choice, bool& iIsQuitOptionSelected);
+		std::unique_ptr<BaseMenu> getNextMenu(int choice, bool& iIsQuitOptionSelected);
 };
 
 class PersonsMenu : public BaseMenu {
 	public:
 		PersonsMenu();
-		BaseMenu *getNextMenu(int choice, bool& iIsQuitOptionSelected);
+		std::unique_ptr<BaseMenu> getNextMenu(int choice, bool& iIsQuitOptionSelected);
 };
 
 class FlatsMenu : public BaseMenu {
 	public:
 		FlatsMenu();
-		BaseMenu *getNextMenu(int choice, bool& iIsQuitOptionSelected);
+		std::unique_ptr<BaseMenu> getNextMenu(int choice, bool& iIsQuitOptionSelected);
 };
 
 #endif

@@ -5,14 +5,15 @@
  *      Author: alex
  */
 
+#include <limits>
+#include <memory> // for unique_ptr
+
 #include "includes/Haus.h"
 #include "includes/MietObject.h"
 #include "includes/Mieter.h"
 #include "includes/Person.h"
 #include "includes/Vermieter.h"
 #include "includes/Menu.h"
-
-#include <limits>
 
 using namespace std;
 
@@ -21,7 +22,7 @@ using namespace std;
 
 int main() {
 
-	BaseMenu* aCurrentMenu = new MainMenu;
+	unique_ptr<BaseMenu> aCurrentMenu(new MainMenu);
 	bool isQuitOptionSelected = false;
 	while (!isQuitOptionSelected)
 	{
@@ -35,13 +36,9 @@ int main() {
 			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // remove all if entered more than 1 letter
 		}
 
-		BaseMenu* aNewMenuPointer = aCurrentMenu->getNextMenu(choice, isQuitOptionSelected);
+		unique_ptr<BaseMenu> aNewMenuPointer(aCurrentMenu->getNextMenu(choice, isQuitOptionSelected));
 
-		if (aNewMenuPointer)
-		{
-			delete aCurrentMenu; // no memory leaks
-			aCurrentMenu = aNewMenuPointer;
-		}
+		if (aNewMenuPointer) aCurrentMenu = move(aNewMenuPointer);
 	}
 
 	vector<Person> persons;

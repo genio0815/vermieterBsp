@@ -15,7 +15,7 @@ BaseMenu::BaseMenu() {
 }
 
 void BaseMenu::printText() {
-	std::cout<< "Please make your selection\n"<<std::endl;
+	std::cout<< "\nPlease make your selection\n"<<std::endl;
 	short choice = 0;
 	for (auto &e : *optPt) {
 		std::cout<<++choice<<'\t'<<e<<std::endl;
@@ -26,14 +26,14 @@ MainMenu::MainMenu() : BaseMenu() {
 	this->optPt = &mainOpts;
 }
 
-BaseMenu * MainMenu::getNextMenu(int choice, bool& iIsQuitOptionSelected) {
-	BaseMenu *aNewMenu = 0;
+std::unique_ptr<BaseMenu> MainMenu::getNextMenu(int choice, bool& iIsQuitOptionSelected) {
+	std::unique_ptr<BaseMenu> aNewMenu;
 	switch (choice) {
 		case 1:
-			aNewMenu = new PersonsMenu;
+			aNewMenu = std::unique_ptr<BaseMenu>(new PersonsMenu);
 			break;
 		case 2:
-			aNewMenu = new FlatsMenu;
+			aNewMenu = std::unique_ptr<BaseMenu>(new FlatsMenu);
 			break;
 		case 3:
 			iIsQuitOptionSelected = true;
@@ -49,8 +49,8 @@ PersonsMenu::PersonsMenu() : BaseMenu() {
 	this->optPt = &personOpts;
 }
 
-BaseMenu * PersonsMenu::getNextMenu(int choice, bool& iIsQuitOptionSelected) {
-	BaseMenu *aNewMenu = 0;
+std::unique_ptr<BaseMenu> PersonsMenu::getNextMenu(int choice, bool& iIsQuitOptionSelected) {
+	std::unique_ptr<BaseMenu> aNewMenu;
 	switch (choice) {
 		case 0:
 			std::cout<<"invalid choice"<<std::endl;
@@ -63,7 +63,7 @@ BaseMenu * PersonsMenu::getNextMenu(int choice, bool& iIsQuitOptionSelected) {
 			break;
 		case 3:
 			std::cout<<"return to main menu"<<std::endl;
-			aNewMenu = new MainMenu;
+			aNewMenu = std::unique_ptr<BaseMenu>(new MainMenu);
 			break;
 		case 4:
 			iIsQuitOptionSelected = true;
@@ -80,8 +80,8 @@ FlatsMenu::FlatsMenu() : BaseMenu(){
 	this->optPt = &flatOpts;
 }
 
-BaseMenu * FlatsMenu::getNextMenu(int choice, bool& iIsQuitOptionSelected) {
-	BaseMenu *aNewMenu = 0;
+std::unique_ptr<BaseMenu> FlatsMenu::getNextMenu(int choice, bool& iIsQuitOptionSelected) {
+	std::unique_ptr<BaseMenu> aNewMenu = 0;
 	switch (choice)
 	{
 		case 0:
@@ -95,7 +95,7 @@ BaseMenu * FlatsMenu::getNextMenu(int choice, bool& iIsQuitOptionSelected) {
 			break;
 		case 3:
 			std::cout<<"return to main menu"<<std::endl;
-			aNewMenu = new MainMenu;
+			aNewMenu = std::unique_ptr<BaseMenu>(new MainMenu);
 			break;
 		case 4:
 			iIsQuitOptionSelected = true;
