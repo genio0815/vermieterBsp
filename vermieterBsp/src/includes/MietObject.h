@@ -9,9 +9,6 @@
 //#define SRC_INCLUDES_MIETOBJECT_H_
 //
 
-
-////#include "../includes/Mieter.h"
-
 #pragma once
 
 #include <iostream>

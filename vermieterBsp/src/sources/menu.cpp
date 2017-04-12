@@ -12,6 +12,7 @@ std::vector<std::string> flatOpts = {"list flats", "add flat", "return to main m
 std::vector<std::string> personOpts = {"list persons", "add person", "return to main menu", "quit"};
 
 BaseMenu::BaseMenu() {
+	optPt = 0;
 }
 
 void BaseMenu::printText() {
@@ -56,6 +57,7 @@ std::unique_ptr<BaseMenu> PersonsMenu::getNextMenu(int choice, bool& iIsQuitOpti
 			std::cout<<"invalid choice"<<std::endl;
 			break;
 		case 1:
+
 			std::cout<<"i will list persons"<<std::endl;
 			break;
 		case 2:

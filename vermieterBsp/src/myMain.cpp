@@ -14,14 +14,11 @@
 #include "includes/Person.h"
 #include "includes/Vermieter.h"
 #include "includes/Menu.h"
+#include "includes/Storage.h"
 
 using namespace std;
 
-//void mainMenu(vector<Person> *persons, vector<MietObject> *accs) {
-
-
-int main() {
-
+void showMainMenu() {
 	unique_ptr<BaseMenu> aCurrentMenu(new MainMenu);
 	bool isQuitOptionSelected = false;
 	while (!isQuitOptionSelected)
@@ -40,11 +37,11 @@ int main() {
 
 		if (aNewMenuPointer) aCurrentMenu = move(aNewMenuPointer);
 	}
+}
 
-	vector<Person> persons;
-	vector<MietObject> accomodations;
+int main() {
 
-	//mainMenu(&persons, &accomodations);
+	showMainMenu();
 
 	Person test2("hugo",42);
 	test2.printToScreen();
