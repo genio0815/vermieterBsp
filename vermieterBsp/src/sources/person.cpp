@@ -8,21 +8,22 @@
 
 #include "../includes/Person.h"
 
-Person::Person(const std::string& name, unsigned int age){
+Person::Person(std::string& name, int age){
 	setName(name);
 	setAge(age);
 }
 
-void Person::printToScreen() const {
-	std::cout<<"name:\t"<<getName()<<std::endl;
-	std::cout<<"age:\t"<<getAge()<<std::endl;
+void Person::setProperties() {}
+
+void Person::printToScreen(){
+	std::cout<<getName()<<"\tage:\t"<<getAge()<<std::endl;
 }
 
-unsigned int Person::getAge() const {
+int Person::getAge() const {
 	return age;
 }
 
-void Person::setAge(unsigned int age) {
+void Person::setAge(int age) {
 	this->age = age;
 }
 

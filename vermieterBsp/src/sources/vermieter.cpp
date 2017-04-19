@@ -8,8 +8,9 @@
 #include <algorithm>
 #include "../includes/Vermieter.h"
 
-Vermieter::Vermieter(const std::string& name, unsigned int age) : Person(name,age) {
+Vermieter::Vermieter(std::string& name, int age) : Person(name,age) {
 	income = 0.0;
+	ownedFlats.resize(0);
 }
 
 Vermieter::~Vermieter() {
@@ -22,17 +23,22 @@ double Vermieter::getIncome() const {
 void Vermieter::setIncome(double income) {
 	this->income = income;
 }
-void Vermieter::printToScreen() {
+void Vermieter::printToScreen(){
+	std::cout<<"\nVermieter\t";
 	Person::printToScreen();
-	std::cout<<"income:\t"<<getIncome()<<std::endl;
-	std::cout<<"number of flats:\t"<<numberFlat()<<std::endl;
+	std::cout<<"income:\t"<<getIncome()<<"\tnumber of flats:\t"<<numberFlat()<<std::endl;
 }
-void Vermieter::addFlat(MietObject newFlat) {
-	this->ownedFlats.push_back(newFlat);
+void Vermieter::addFlat() {
+	//this->ownedFlats.emplace_back(newFlat);
 }
 void Vermieter::removeFlatByIndex(int index) {
 	this->ownedFlats.erase(ownedFlats.begin()+index);
 }
-int Vermieter::numberFlat() {
-	return this->ownedFlats.size();
+size_t Vermieter::numberFlat() {
+	return ownedFlats.size();
+}
+
+void Vermieter::setProperties() {
+	setIncome(100.0);
+	ownedFlats.resize(100);
 }

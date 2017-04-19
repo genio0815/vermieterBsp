@@ -8,17 +8,21 @@
 #ifndef SRC_INCLUDES_MIETER_H_
 #define SRC_INCLUDES_MIETER_H_
 
+#include <iomanip>
 #include "../includes/Person.h"
 
-class Mieter: protected Person {
+// has to be public to pack it all into one vector of unique_ptr !!!
+class Mieter: public Person {
 	public:
-		Mieter(const std::string& name, unsigned int age);
+		Mieter(std::string& name, int age);
 
 		double getExpenses() const;
 		void setExpenses(double expenses);
-		void printToScreen() const;
+		void printToScreen();
 		const std::string& getMovingInDate() const;
-		void setMovingInDate(const std::string& movingInDate) ;
+		void setMovingInDate(const std::string& movingInDate);
+		void setProperties();
+
 	private:
 		double expenses;
 		std::string movingInDate;

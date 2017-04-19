@@ -37,25 +37,12 @@ void showMainMenu() {
 
 		if (aNewMenuPointer) aCurrentMenu = move(aNewMenuPointer);
 	}
+	cout<<"\nBye Bye..."<<endl;
 }
 
 int main() {
 
 	showMainMenu();
-
-	Person test2("hugo",42);
-	test2.printToScreen();
-
-	MietObject schassHittn;
-	Haus schassHittn2;
-
-	Vermieter vermieter1("heinzi",45);
-	vermieter1.printToScreen();
-	vermieter1.addFlat(schassHittn);
-	vermieter1.addFlat(schassHittn2);
-	vermieter1.printToScreen();
-	vermieter1.removeFlatByIndex(10);
-	vermieter1.printToScreen();
 
 	return 0;
 }

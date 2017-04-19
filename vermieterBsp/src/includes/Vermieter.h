@@ -9,25 +9,29 @@
 #define SRC_INCLUDES_VERMIETER_H_
 
 #include <vector>
+#include <memory> // for unique_ptr
 
 #include "../includes/Person.h"
 #include "../includes/MietObject.h"
 
-class Vermieter: protected Person {
+
+// has to be public to pack it all into one vector of unique_ptr !!!
+class Vermieter: public Person {
 	public:
-		Vermieter(const std::string& name, unsigned int age);
+		Vermieter(std::string& name, int age);
 		double getIncome() const;
 		void setIncome(double income);
 		void printToScreen();
-		void addFlat(MietObject);
+		void addFlat();
 		void removeFlatByIndex(int index);
-		int numberFlat();
+		size_t numberFlat();
+		void setProperties();
 
 		~Vermieter();
 
 	private:
 		double income;
-		std::vector<MietObject> ownedFlats;
+		std::vector<std::unique_ptr<MietObject>> ownedFlats;
 };
 
 #endif

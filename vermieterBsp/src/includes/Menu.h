@@ -13,17 +13,15 @@
 #include <vector>
 #include <memory> // for unique_ptr
 
+#include "../includes/Storage.h"
+
+
 class BaseMenu {
 	public:
 		BaseMenu();
 		virtual ~BaseMenu() { }
 		virtual std::unique_ptr<BaseMenu> getNextMenu(int iChoice, bool& iIsQuitOptionSelected) = 0;
 		void printText();
-
-//		virtual void printText() // This is made virtual, but doesn't *have* to be redefined. In the current code I have written, it is not redefined as we store the menu text as a string in the object
-//		{
-//			std::cout << m_MenuText << std::endl;
-//		}
 
 	protected:
 		std::vector<std::string> menuOptions;

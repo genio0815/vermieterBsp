@@ -8,8 +8,8 @@
 #include "../includes/Menu.h"
 
 std::vector<std::string> mainOpts = {"Persons Submenu", "Flats Submenu", "Quit"};
-std::vector<std::string> flatOpts = {"list flats", "add flat", "return to main menu", "quit"};
-std::vector<std::string> personOpts = {"list persons", "add person", "return to main menu", "quit"};
+std::vector<std::string> flatOpts = {"List flats", "Add flat", "Return to main menu", "Quit"};
+std::vector<std::string> personOpts = {"List persons", "Add person", "Return to main menu", "Quit"};
 
 BaseMenu::BaseMenu() {
 	optPt = 0;
@@ -40,28 +40,29 @@ std::unique_ptr<BaseMenu> MainMenu::getNextMenu(int choice, bool& iIsQuitOptionS
 			iIsQuitOptionSelected = true;
 			break;
 		default: {
-			std::cout<<"unrecognized input"<<std::endl;
+			std::cerr<<"unrecognized input "<<choice<<std::endl;
 			}
 	}
 	return aNewMenu;
 }
 
 PersonsMenu::PersonsMenu() : BaseMenu() {
-	this->optPt = &personOpts;
+	this->optPt = &personOpts; // def. value
 }
 
 std::unique_ptr<BaseMenu> PersonsMenu::getNextMenu(int choice, bool& iIsQuitOptionSelected) {
 	std::unique_ptr<BaseMenu> aNewMenu;
 	switch (choice) {
 		case 0:
-			std::cout<<"invalid choice"<<std::endl;
+			std::cerr<<"invalid choice"<<std::endl;
 			break;
 		case 1:
-
 			std::cout<<"i will list persons"<<std::endl;
+			Storage::listPersons();
 			break;
 		case 2:
 			std::cout<<"i will add person"<<std::endl;
+			Storage::addPerson();
 			break;
 		case 3:
 			std::cout<<"return to main menu"<<std::endl;
@@ -86,9 +87,6 @@ std::unique_ptr<BaseMenu> FlatsMenu::getNextMenu(int choice, bool& iIsQuitOption
 	std::unique_ptr<BaseMenu> aNewMenu = 0;
 	switch (choice)
 	{
-		case 0:
-			std::cout<<"invalid choice"<<std::endl;
-			break;
 		case 1:
 			std::cout<<"i will list flats"<<std::endl;
 			break;

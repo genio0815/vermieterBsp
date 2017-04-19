@@ -13,10 +13,12 @@
 
 class Person {
 	public:
-		Person(const std::string& name, unsigned int age);
-		void printToScreen() const;
-		unsigned int getAge() const;
-		void setAge(unsigned int age);
+		Person(std::string& name, int age);
+		virtual void printToScreen();
+		virtual ~Person() {}; // quick & dirty
+		virtual void setProperties();
+		int getAge() const;
+		void setAge(int age);
 		const std::string& getName() const;
 		void setName(const std::string& name);
 	private:
