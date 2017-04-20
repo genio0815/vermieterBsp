@@ -19,6 +19,8 @@
 #include "../includes/Vermieter.h"
 #include "../includes/Mieter.h"
 #include "../includes/MietObject.h"
+#include "../includes/Haus.h"
+#include "../includes/Whg.h"
 
 class Storage {
 	public:

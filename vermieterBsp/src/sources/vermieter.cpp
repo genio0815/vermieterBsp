@@ -39,6 +39,6 @@ size_t Vermieter::numberFlat() {
 }
 
 void Vermieter::setProperties() {
-	setIncome(100.0);
+	std::cout<<"\nVermieter\t";
 	ownedFlats.resize(100);
 }

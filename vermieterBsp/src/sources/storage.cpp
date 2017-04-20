@@ -23,8 +23,12 @@ void Storage::listPersons() {
 }
 
 void Storage::listFlats() {
+	int id = 0;
+
 	for (auto const &flat : flats) {
-		std::cout<<flat->getAdress()<<std::endl;
+		std::cout<<std::setfill('-')<<std::setw(80)<<std::endl;
+		std::cout<<"\nflat ID "<<id++<<std::endl;
+		flat->printToScreen();
 	}
 }
 
@@ -92,7 +96,44 @@ double Storage::checkDouble(const std::string &text) {
 
 
 void Storage::addFlat() {
-	//this->flats.push_back(addMe);
+	int type;
+	double size, prize;
+	std::string address;
+
+	std::cout<<"\nenter Mietobject type:\n\t(1) Haus\n\t(2) Whg\n\t(3) go back\n"<<std::endl;
+	while(!(std::cin >> type)) {
+		std::cerr<<"invalid choice, try again\n"<<std::endl;
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
+
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+	switch (type) {
+		case 1:
+			std::cout<<"\nenter Haus address ";
+			std::getline(std::cin,address);
+			size = checkDouble("enter size");
+			prize = checkDouble("enter prize");
+			flats.emplace_back(new Haus(address, size, prize));
+			dynamic_cast<Haus*>(flats.at(flats.size()-1).get())->setProperties();
+			break;
+		case 2:
+			std::cout<<"\nenter Whg address ";
+			std::getline(std::cin,address);
+			size = checkDouble("enter size");
+			prize = checkDouble("enter prize");
+
+			flats.emplace_back(new Whg(address, size, prize));
+			dynamic_cast<Whg*>(flats.at(flats.size()-1).get())->setProperties();
+			break;
+		case 3:
+			return;
+
+		default:
+			//std::cerr<<"invalid choice"<<std::endl;
+			addFlat();
+	}
 }
 
 

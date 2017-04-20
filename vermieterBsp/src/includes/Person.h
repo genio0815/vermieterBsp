@@ -23,7 +23,7 @@ class Person {
 		void setName(const std::string& name);
 	private:
 		std::string name;
-		unsigned int age;
+		int age;
 };
 
 #endif

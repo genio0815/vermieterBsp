@@ -7,9 +7,16 @@
 
 #include "../includes/MietObject.h"
 
-MietObject::MietObject(){
-//	this->setPrize(0.0);
-//	this->setSize(0.0);
+MietObject::MietObject(const std::string& address, double size, double prize){
+	this->setAddress(address);
+	this->setPrize(prize);
+	this->setSize(size);
+}
+
+void MietObject::printToScreen() {
+	std::cout<<"Addresse:/t"<<getAddress()<<std::endl;
+	std::cout<<"Groesse:/t"<<getSize()<<std::endl;
+	std::cout<<"Preis:/t"<<getPrize()<<std::endl;
 }
 
 double MietObject::getPrize() const {
@@ -24,11 +31,11 @@ double MietObject::getSize() const {
 void MietObject::setSize(double size) {
 	this->size = size;
 }
-const std::string& MietObject::getAdress() const {
-	return adress;
+const std::string& MietObject::getAddress() const {
+	return address;
 }
-void MietObject::setAdress(const std::string& adress) {
-	this->adress = adress;
+void MietObject::setAddress(const std::string& address) {
+	this->address = address;
 }
 
 //Vermieter MietObject::getOwner() {

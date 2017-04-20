@@ -20,13 +20,15 @@ class Mieter;
 
 class MietObject {
 	public:
-		MietObject();
+		MietObject(const std::string&, double, double);
+		~MietObject() {};
+		virtual void printToScreen();
 		double getPrize() const;
 		void setPrize(double prize);
 		double getSize() const;
 		void setSize(double size);
-		const std::string& getAdress() const;
-		void setAdress(const std::string& adress);
+		const std::string& getAddress() const;
+		void setAddress(const std::string& adress);
 		Vermieter getOwner();
 		Mieter getRenter();
 		void setOwner(Vermieter own);
@@ -37,7 +39,7 @@ class MietObject {
 		double size;
 		Vermieter owner();
 		Mieter renter();
-		std::string adress;
+		std::string address;
 };
 
 //#endif

@@ -8,7 +8,8 @@
 #include "../includes/Mieter.h"
 
 Mieter::Mieter(std::string& name, int age) : Person(name,age) {
-	expenses = 0.0;
+	this->expenses = 0.0;
+	this->flatIndex = 0;
 }
 double Mieter::getExpenses() const {
 	return expenses;
@@ -19,6 +20,7 @@ void Mieter::setExpenses(double expenses) {
 void Mieter::printToScreen(){
 	std::cout<<"\nMieter\t";
 	Person::printToScreen();
+	std::cout<<"Einzugs Datum:\t"<<getMovingInDate()<<std::endl;
 	std::cout<<"expenses:\t"<<getExpenses()<<std::endl;
 }
 const std::string& Mieter::getMovingInDate() const {
@@ -27,8 +29,19 @@ const std::string& Mieter::getMovingInDate() const {
 void Mieter::setMovingInDate(const std::string& movingInDate) {
 	this->movingInDate = movingInDate;
 }
-
+void Mieter::setFlat(int flatIndex) {
+	this->flatIndex = flatIndex;
+}
+int Mieter::getFlat() {
+	return this->flatIndex;
+}
 void Mieter::setProperties() {
-	setMovingInDate("jetzt");
+	std::string datum;
+	std::cin.clear();
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	std::cout<<"\nenter Einzugs Datum ";
+	std::getline(std::cin, datum);
+	setMovingInDate(datum);
 	setExpenses(10000.0);
+	setFlat(0);
 }

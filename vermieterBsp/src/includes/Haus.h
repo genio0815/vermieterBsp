@@ -12,13 +12,15 @@
 
 class Haus: public MietObject {
 	public:
-		Haus();
+		Haus(const std::string&, double, double);
+		void printToScreen();
 		const std::string& getConstuctionDate() const;
 		void setConstuctionDate(const std::string& constuctionDate);
 		unsigned int getFloors() const;
 		void setFloors(unsigned int floors);
 		bool isHasCellar() const;
 		void setHasCellar(bool hasCellar);
+		void setProperties();
 
 	private:
 		unsigned int floors;

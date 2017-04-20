@@ -84,14 +84,14 @@ FlatsMenu::FlatsMenu() : BaseMenu(){
 }
 
 std::unique_ptr<BaseMenu> FlatsMenu::getNextMenu(int choice, bool& iIsQuitOptionSelected) {
-	std::unique_ptr<BaseMenu> aNewMenu = 0;
+	std::unique_ptr<BaseMenu> aNewMenu;
 	switch (choice)
 	{
 		case 1:
-			std::cout<<"i will list flats"<<std::endl;
+			Storage::listFlats();
 			break;
 		case 2:
-			std::cout<<"i will add flat"<<std::endl;
+			Storage::addFlat();
 			break;
 		case 3:
 			std::cout<<"return to main menu"<<std::endl;

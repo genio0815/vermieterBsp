@@ -22,8 +22,11 @@ class Mieter: public Person {
 		const std::string& getMovingInDate() const;
 		void setMovingInDate(const std::string& movingInDate);
 		void setProperties();
+		void setFlat(int flatIndex);
+		int getFlat();
 
 	private:
+		int flatIndex;
 		double expenses;
 		std::string movingInDate;
 };
