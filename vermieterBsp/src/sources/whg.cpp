@@ -3,10 +3,13 @@
 //
 
 #include "../includes/Whg.h"
+#include "../includes/Storage.h"
 
+Whg::Whg() {
 
+}
 Whg::Whg(const std::string& address, double size, double prize) : MietObject(address, size, prize) {
-    this->setCategory("A");
+    setCategory("A");
     //this->floors = 0;
 }
 
@@ -24,5 +27,6 @@ void Whg::setCategory(const std::string &cat) {
 }
 
 void Whg::setProperties() {
-    this->setCategory("B");
+	MietObject::setProperties();
+	setCategory(Storage::checkString("enter Whg Kategorie"));
 }

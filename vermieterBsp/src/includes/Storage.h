@@ -29,8 +29,11 @@ class Storage {
 		static void listFlats();
 		static void addPerson();
 		static void addFlat();
-		static int checkInt(const std::string&);
+		static int checkInt(const std::string&, std::vector<int>*);
 		static double checkDouble(const std::string&);
+		static std::string checkString(const std::string&);
+		static bool checkBool(const std::string&);
+		static unsigned int checkUInt(const std::string&);
 		//static void adoptVermieter(std::unique_ptr<Person>&);
 		static void adoptVermieter(Vermieter*);
 

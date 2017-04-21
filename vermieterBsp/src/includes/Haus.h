@@ -12,8 +12,10 @@
 
 class Haus: public MietObject {
 	public:
+		Haus();
 		Haus(const std::string&, double, double);
-		void printToScreen();
+		virtual ~Haus(){};
+		virtual void printToScreen();
 		const std::string& getConstuctionDate() const;
 		void setConstuctionDate(const std::string& constuctionDate);
 		unsigned int getFloors() const;

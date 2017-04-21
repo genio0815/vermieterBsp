@@ -9,8 +9,10 @@
 
 class Whg: public MietObject {
 public:
+	Whg();
     Whg(const std::string&, double, double);
-    void printToScreen();
+    virtual ~Whg() {};
+    void virtual printToScreen();
     const std::string& getCategory() const;
     void setCategory(const std::string& cat);
     void setProperties();

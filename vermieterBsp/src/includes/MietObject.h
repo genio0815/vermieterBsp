@@ -14,6 +14,8 @@
 #include <iostream>
 #include <string>
 
+
+
 // forward declarations
 class Vermieter;
 class Mieter;
@@ -21,8 +23,10 @@ class Mieter;
 class MietObject {
 	public:
 		MietObject(const std::string&, double, double);
-		~MietObject() {};
+		MietObject();
+		virtual ~MietObject() {};
 		virtual void printToScreen();
+		virtual void setProperties();
 		double getPrize() const;
 		void setPrize(double prize);
 		double getSize() const;

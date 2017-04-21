@@ -6,10 +6,16 @@
  */
 
 #include "../includes/Haus.h"
+#include "../includes/Storage.h"
+
+Haus::Haus() : MietObject() {
+	setFloors(0);
+	setHasCellar(false);
+}
 
 Haus::Haus(const std::string& address, double size, double prize) : MietObject(address, size, prize) {
-	this->hasCellar = false;
-	this->floors = 0;
+	setFloors(0);
+	setHasCellar(false);
 }
 
 const std::string& Haus::getConstuctionDate() const {
@@ -23,7 +29,7 @@ void Haus::setConstuctionDate(const std::string& constuctionDate) {
 void Haus::printToScreen() {
 	MietObject::printToScreen();
 	std::cout<<"number floors:\t"<<getFloors()<<"\thas cellar\t"<<isHasCellar()<<std::endl;
-	std::cout<<"construction date:/t"<<getConstuctionDate()<<std::endl;
+	std::cout<<"construction date:\t"<<getConstuctionDate()<<std::endl;
 }
 
 unsigned int Haus::getFloors() const {
@@ -43,5 +49,8 @@ void Haus::setHasCellar(bool hasCellar) {
 }
 
 void Haus::setProperties() {
-	this->setHasCellar(false);
+	MietObject::setProperties();
+	setConstuctionDate(Storage::checkString("enter Baujahr"));
+	setFloors(Storage::checkUInt("Anzahl Stockwerke"));
+	setHasCellar(Storage::checkBool("hat Keller"));
 }
