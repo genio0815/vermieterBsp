@@ -8,10 +8,6 @@
 Whg::Whg() {
 
 }
-Whg::Whg(const std::string& address, double size, double prize) : MietObject(address, size, prize) {
-    setCategory("A");
-    //this->floors = 0;
-}
 
 void Whg::printToScreen() {
     MietObject::printToScreen();
@@ -29,4 +25,14 @@ void Whg::setCategory(const std::string &cat) {
 void Whg::setProperties() {
 	MietObject::setProperties();
 	setCategory(Storage::checkString("enter Whg Kategorie"));
+}
+
+std::string Whg::csvLine() {
+	return "4;" + MietObject::csvLine() + ';' + getCategory();
+}
+
+void Whg::readProperties(std::vector<std::string> *values) {
+	setAddress(values->at(0));
+	setSize(std::stod(values->at(1)));
+	setPrize(std::stod(values->at(2)));
 }

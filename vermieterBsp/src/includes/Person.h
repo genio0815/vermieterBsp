@@ -10,20 +10,26 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 class Person {
 	public:
-		Person(std::string& name, int age);
+		Person();
 		virtual void printToScreen();
 		virtual ~Person() {}; // quick & dirty
 		virtual void setProperties();
-		int getAge() const;
-		void setAge(int age);
+		virtual std::string csvLine();
+		virtual void readProperties(std::vector<std::string> *);
+
+	protected:
+		unsigned int getAge() const;
+		void setAge(unsigned int age);
 		const std::string& getName() const;
-		void setName(const std::string& name);
+		void setName(const std::string &);
+
 	private:
 		std::string name;
-		int age;
+		unsigned int age;
 };
 
 #endif

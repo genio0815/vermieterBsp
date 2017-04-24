@@ -8,20 +8,23 @@
 #ifndef SRC_INCLUDES_HAUS_H_
 #define SRC_INCLUDES_HAUS_H_
 
+#include<vector>
+
 #include "../includes/MietObject.h"
 
 class Haus: public MietObject {
 	public:
 		Haus();
-		Haus(const std::string&, double, double);
 		virtual ~Haus(){};
 		virtual void printToScreen();
-		const std::string& getConstuctionDate() const;
-		void setConstuctionDate(const std::string& constuctionDate);
-		unsigned int getFloors() const;
-		void setFloors(unsigned int floors);
-		bool isHasCellar() const;
-		void setHasCellar(bool hasCellar);
+		virtual std::string csvLine();
+		virtual void readProperties(std::vector<std::string> *);
+		const std::string& getConstructionDate();
+		void setConstuctionDate(const std::string&);
+		unsigned int getFloors();
+		void setFloors(unsigned int);
+		bool isHasCellar();
+		void setHasCellar(bool);
 		void setProperties();
 
 	private:

@@ -13,8 +13,7 @@
 
 #include <iostream>
 #include <string>
-
-
+#include <vector>
 
 // forward declarations
 class Vermieter;
@@ -22,23 +21,26 @@ class Mieter;
 
 class MietObject {
 	public:
-		MietObject(const std::string&, double, double);
 		MietObject();
 		virtual ~MietObject() {};
 		virtual void printToScreen();
 		virtual void setProperties();
-		double getPrize() const;
-		void setPrize(double prize);
-		double getSize() const;
-		void setSize(double size);
-		const std::string& getAddress() const;
-		void setAddress(const std::string& adress);
+		virtual std::string csvLine();
+		virtual void readProperties(std::vector<std::string> *) {};
+
+	protected:
+		double getPrize();
+		void setPrize(double);
+		double getSize();
+		void setSize(double);
+		const std::string& getAddress();
+		void setAddress(const std::string &);
 		Vermieter getOwner();
 		Mieter getRenter();
 		void setOwner(Vermieter own);
 		void setRenter(Mieter rent);
 
-	protected:
+	private:
 		double prize;
 		double size;
 		Vermieter owner();

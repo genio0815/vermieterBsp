@@ -10,12 +10,13 @@
 class Whg: public MietObject {
 public:
 	Whg();
-    Whg(const std::string&, double, double);
     virtual ~Whg() {};
     void virtual printToScreen();
+    virtual std::string csvLine();
     const std::string& getCategory() const;
-    void setCategory(const std::string& cat);
-    void setProperties();
+    void setCategory(const std::string &);
+    virtual void setProperties();
+    virtual void readProperties(std::vector<std::string> *);
 
 private:
     std::string category;

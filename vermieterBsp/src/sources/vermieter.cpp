@@ -6,11 +6,13 @@
  */
 
 #include <algorithm>
+#include <string>
+#include <vector>
 #include "../includes/Vermieter.h"
+#include "../includes/Storage.h"
 
-Vermieter::Vermieter(std::string& name, int age) : Person(name,age) {
+Vermieter::Vermieter() : Person() {
 	income = 0.0;
-	ownedFlats.resize(0);
 }
 
 Vermieter::~Vermieter() {
@@ -39,6 +41,38 @@ size_t Vermieter::numberFlat() {
 }
 
 void Vermieter::setProperties() {
-	std::cout<<"\nVermieter\t";
-	ownedFlats.resize(100);
+	Person::setProperties();
+	std::string token;
+
+	if (Storage::flats.size() > 0) {
+		token = Storage::checkString("to add a new flat enter: NEW\nto asign existing flat via its ID enter EX\notherwise continue");
+	} else {
+		token = Storage::checkString("to add a new flat enter: NEW\n(currently no flats present)\notherwise continue");
+	}
+
+	if (token.compare("NEW") == 0) {
+		int ok = Storage::addFlat();
+		if (ok != -1) ownedFlats.push_back(ok);
+	} else if (token.compare("EX") == 0) {
+		if (Storage::flats.size() > 0) {
+			std::vector<int> existingFlats;
+			for (size_t i = 0; i< Storage::flats.size(); ++i) {
+				existingFlats.push_back(i);
+			}
+			token = Storage::checkString("\nto list existing flats enter: YES");
+			if (token.compare("YES")) Storage::listFlats();
+			ownedFlats.push_back(Storage::checkInt("enter flat ID",&existingFlats));
+		}
+	}
 }
+
+std::string Vermieter::csvLine() {
+	return "2;" + Person::csvLine() + ';' + std::to_string(getIncome()) + ';' + std::to_string(numberFlat());
+}
+
+void Vermieter::readProperties(std::vector<std::string> *values) {
+	setName(values->at(0));
+	setAge(std::stoul(values->at(1)));
+	setIncome(std::stod(values->at(2)));
+}
+

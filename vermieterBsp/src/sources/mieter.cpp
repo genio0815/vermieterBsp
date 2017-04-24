@@ -6,11 +6,14 @@
  */
 
 #include "../includes/Mieter.h"
+#include "../includes/Storage.h"
 
-Mieter::Mieter(std::string& name, int age) : Person(name,age) {
-	this->expenses = 0.0;
-	this->flatIndex = 0;
+#include <string>
+
+Mieter::Mieter() : Person() {
+	expenses = 0.0;
 }
+
 double Mieter::getExpenses() const {
 	return expenses;
 }
@@ -32,16 +35,22 @@ void Mieter::setMovingInDate(const std::string& movingInDate) {
 void Mieter::setFlat(int flatIndex) {
 	this->flatIndex = flatIndex;
 }
-int Mieter::getFlat() {
+int Mieter::getFlat() const {
 	return this->flatIndex;
 }
 void Mieter::setProperties() {
-	std::string datum;
-	std::cin.clear();
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	std::cout<<"\nenter Einzugs Datum ";
-	std::getline(std::cin, datum);
-	setMovingInDate(datum);
-	setExpenses(10000.0);
+	Person::setProperties();
+	movingInDate = Storage::checkString("enter Einzugs Datum");
 	setFlat(0);
+}
+
+std::string Mieter::csvLine(){
+	return "1;" + Person::csvLine() + ';' + getMovingInDate() + ';' + std::to_string(getExpenses()) + ';' + std::to_string(getFlat());
+}
+void Mieter::readProperties(std::vector<std::string> *values) {
+	setName(values->at(0));
+	setAge(std::stoul(values->at(1)));
+	setMovingInDate(values->at(2));
+	setExpenses(std::stod(values->at(3)));
+	setFlat(std::stoi(values->at(4)));
 }

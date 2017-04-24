@@ -7,23 +7,25 @@
 
 
 #include "../includes/Person.h"
+#include "../includes/Storage.h"
 
-Person::Person(std::string& name, int age){
-	setName(name);
-	setAge(age);
+Person::Person(){
 }
 
-void Person::setProperties() {}
+void Person::setProperties() {
+	name = Storage::checkString("enter Name");
+	age = Storage::checkUInt("enter Age");
+}
 
 void Person::printToScreen(){
 	std::cout<<getName()<<"\tage:\t"<<getAge()<<std::endl;
 }
 
-int Person::getAge() const {
+unsigned int Person::getAge() const {
 	return age;
 }
 
-void Person::setAge(int age) {
+void Person::setAge(unsigned int age) {
 	this->age = age;
 }
 
@@ -35,5 +37,9 @@ void Person::setName(const std::string& name) {
 	this->name = name;
 }
 
-
+std::string Person::csvLine(){
+	return getName() + ';' + std::to_string(getAge());
+}
+void Person::readProperties(std::vector<std::string> *) {
+}
 

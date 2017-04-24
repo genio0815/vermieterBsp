@@ -6,9 +6,10 @@
  */
 
 #include "../includes/Menu.h"
+#include <string>
 
 
-std::vector<std::string> mainOpts = {"Persons Submenu", "Flats Submenu", "Quit"};
+std::vector<std::string> mainOpts = {"Persons Submenu", "Flats Submenu", "Read input file", "Write to file" ,"Quit"};
 std::vector<std::string> flatOpts = {"List flats", "Add flat", "Return to main menu", "Quit"};
 std::vector<std::string> personOpts = {"List persons", "Add person", "Return to main menu", "Quit"};
 
@@ -37,12 +38,22 @@ std::unique_ptr<BaseMenu> MainMenu::getNextMenu(int choice, bool& iIsQuitOptionS
 		case 2:
 			aNewMenu = std::unique_ptr<BaseMenu>(new FlatsMenu);
 			break;
-		case 3:
+		case 3: {
+			std::string infile;
+			std::cout<<"\nenter file name: ";
+			std::cin >> infile;
+			Storage::readCSV(infile);
+			break;
+		}
+		case 4:
+			Storage::writeCSV("myCsv.csv");
+			break;
+		case 5:
 			iIsQuitOptionSelected = true;
 			break;
 		default: {
 			std::cerr<<"unrecognized input "<<choice<<std::endl;
-			}
+		}
 	}
 	return aNewMenu;
 }
@@ -58,11 +69,9 @@ std::unique_ptr<BaseMenu> PersonsMenu::getNextMenu(int choice, bool& iIsQuitOpti
 			std::cerr<<"invalid choice"<<std::endl;
 			break;
 		case 1:
-			std::cout<<"i will list persons"<<std::endl;
 			Storage::listPersons();
 			break;
 		case 2:
-			std::cout<<"i will add person"<<std::endl;
 			Storage::addPerson();
 			break;
 		case 3:
@@ -74,7 +83,7 @@ std::unique_ptr<BaseMenu> PersonsMenu::getNextMenu(int choice, bool& iIsQuitOpti
 			break;
 		default:
 		{
-			// Do nothing - we won't change the menu
+			// nothing
 		}
 	}
 	return aNewMenu;
@@ -103,7 +112,7 @@ std::unique_ptr<BaseMenu> FlatsMenu::getNextMenu(int choice, bool& iIsQuitOption
 			break;
 		default:
 		{
-			// Do nothing - we won't change the menu
+			// nothing
 		}
 	}
 	return aNewMenu;

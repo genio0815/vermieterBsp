@@ -13,12 +13,6 @@ MietObject::MietObject() {
 	setSize(0.0);
 }
 
-MietObject::MietObject(const std::string& address, double size, double prize){
-	setAddress(address);
-	setPrize(prize);
-	setSize(size);
-}
-
 void MietObject::printToScreen() {
 	std::cout<<"Addresse:\t"<<getAddress()<<std::endl;
 	std::cout<<"Groesse:\t"<<getSize()<<std::endl;
@@ -26,32 +20,34 @@ void MietObject::printToScreen() {
 }
 
 void MietObject::setProperties() {
-	std::cout<<"will add MietObject porps"<<std::endl;
-	std::cout<<"\nenter Address ";
-	std::getline(std::cin,address);
+	address = Storage::checkString("enter Address");
 	size = Storage::checkDouble("enter size");
 	prize = Storage::checkDouble("enter prize");
 	// owner
 	// renter
 }
 
-double MietObject::getPrize() const {
+double MietObject::getPrize(){
 	return prize;
 }
 void MietObject::setPrize(double prize) {
 	this->prize = prize;
 }
-double MietObject::getSize() const {
+double MietObject::getSize(){
 	return size;
 }
 void MietObject::setSize(double size) {
 	this->size = size;
 }
-const std::string& MietObject::getAddress() const {
+const std::string& MietObject::getAddress(){
 	return address;
 }
 void MietObject::setAddress(const std::string& address) {
 	this->address = address;
+}
+
+std::string MietObject::csvLine() {
+	return getAddress() + ';' + std::to_string(getSize()) + ';' + std::to_string(getPrize());
 }
 
 //Vermieter MietObject::getOwner() {
