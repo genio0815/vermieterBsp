@@ -254,7 +254,8 @@ void Storage::proceedInTime() {
 	for (auto &flat : flats){
 		if(!flat->isAv()) {
 			costs  = span * flat->getRate();
-			persons.at(flat->getRenter())->
+			persons.at(flat->getRenter())->setExpenses(costs);
+			persons.at(flat->getOwner())
 		}
 	}
 }

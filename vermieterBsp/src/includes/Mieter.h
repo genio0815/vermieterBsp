@@ -18,8 +18,8 @@ class Mieter: public Person {
 	public:
 		Mieter();
 
-		double getExpenses();
-		void setExpenses(double);
+		double getBilance();
+		void setBilance(double);
 		void printToScreen();
 		const std::string& getBuerge() const;
 		void setBuerge(const std::string &);

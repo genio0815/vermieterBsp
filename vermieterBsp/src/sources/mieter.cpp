@@ -14,12 +14,12 @@ Mieter::Mieter() : Person() {
 	expenses = 0.0;
 }
 
-double Mieter::getExpenses(){
+double Mieter::getBalance(){
 	double rate = Storage::flats.at(getFlat())->getRate();
 	expenses = monthsInFlat * rate;
 	return expenses;
 }
-void Mieter::setExpenses(double expenses) {
+void Mieter::setBalance(double expenses) {
 	this->expenses = expenses;
 }
 void Mieter::printToScreen(){
