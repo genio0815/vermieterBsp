@@ -17,9 +17,9 @@
 class Mieter: public Person {
 	public:
 		Mieter();
-
-		double getBilance();
-		void setBilance(double);
+		void updateBalance();
+		double getBalance();
+		void setBalance(double);
 		void printToScreen();
 		const std::string& getBuerge() const;
 		void setBuerge(const std::string &);

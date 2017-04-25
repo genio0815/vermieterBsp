@@ -84,3 +84,11 @@ void MietObject::setOwner(unsigned int ownId) {
 void MietObject::setRenter(unsigned int rentId) {
 	this->renterId = rentId;
 }
+
+void MietObject::setProfit(double) {
+	;
+}
+
+double MietObject::getProfit(){
+	;
+}

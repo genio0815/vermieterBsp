@@ -18,8 +18,9 @@
 class Vermieter: public Person {
 	public:
 		Vermieter();
-		double getIncome();
-		void setIncome(double);
+		void updateBalance();
+		double getBalance();
+		void setBalance(double);
 		void printToScreen();
 		void addFlat();
 		size_t numberFlat();

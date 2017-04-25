@@ -22,10 +22,11 @@ class Person {
 		virtual void readProperties(std::vector<std::string> *);
 		// add following for childs and override them...otherwise i'd implement visitor pattern...
 		void removeFlat(unsigned int) {};
-		double getExpenses() {return 0.0;};
-		virtual void setBalance(double) {};
-		virtual double getBalance() {return 0.0;};
+		void updateBalance() {};
+		void setBalance(double) {};
+		double getBalance() {return 0.0;};
 		void setMonthsInFlat(double) {};
+		double monthlyBalance() {return 0.0;};
 
 	protected:
 		unsigned int getAge() const;

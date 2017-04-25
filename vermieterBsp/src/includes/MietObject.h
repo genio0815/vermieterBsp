@@ -35,6 +35,8 @@ class MietObject {
 		void setAv(bool);
 		void setRate(double);
 		double getRate();
+		void setProfit(double);
+		double getProfit();
 
 	protected:
 		double getPrize();

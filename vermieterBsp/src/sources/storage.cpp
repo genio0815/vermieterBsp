@@ -244,18 +244,16 @@ void Storage::deleteOwnerFromFlat(unsigned int flatId) {
 }
 
 void Storage::proceedInTime() {
-	double costs;
-	double span = checkDouble("/nenter number of months to wait/n");
+	double span = checkDouble("\nenter number of months to wait\n");
 
-	for (auto &pers : persons) {
-		pers->setMonthsInFlat(span);
+	for (auto &flat : flats){
+		if(!flat->isAvailable()) {
+			persons.at(flat->getRenter())->setMonthsInFlat(span);
+			persons.at(flat->getRenter())->updateBalance();
+		}
 	}
 
 	for (auto &flat : flats){
-		if(!flat->isAv()) {
-			costs  = span * flat->getRate();
-			persons.at(flat->getRenter())->setExpenses(costs);
-			persons.at(flat->getOwner())
-		}
+		persons.at(flat->getOwner())->updateBalance();
 	}
 }

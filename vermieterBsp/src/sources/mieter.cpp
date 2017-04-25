@@ -14,10 +14,13 @@ Mieter::Mieter() : Person() {
 	expenses = 0.0;
 }
 
-double Mieter::getBalance(){
-	double rate = Storage::flats.at(getFlat())->getRate();
-	expenses = monthsInFlat * rate;
+double Mieter::getBalance() {
 	return expenses;
+}
+
+void Mieter::updateBalance(){
+	double rate = Storage::flats.at(getFlat())->getRate();
+	expenses += monthsInFlat * rate;
 }
 void Mieter::setBalance(double expenses) {
 	this->expenses = expenses;
@@ -26,7 +29,7 @@ void Mieter::printToScreen(){
 	std::cout<<"\nMieter\t";
 	Person::printToScreen();
 	std::cout<<"Buerge:\t"<<getBuerge()<<std::endl;
-	std::cout<<"expenses:\t"<<getExpenses()<<std::endl;
+	std::cout<<"expenses:\t"<<getBalance()<<std::endl;
 }
 const std::string& Mieter::getBuerge() const {
 	return buerge;
@@ -48,18 +51,18 @@ void Mieter::setProperties() {
 }
 
 std::string Mieter::csvLine(){
-	return "1;" + Person::csvLine() + ';' + getBuerge() + ';' + std::to_string(getExpenses()) + ';' + std::to_string(getFlat());
+	return "1;" + Person::csvLine() + ';' + getBuerge() + ';' + std::to_string(getBalance()) + ';' + std::to_string(getFlat());
 }
 void Mieter::readProperties(std::vector<std::string> *values) {
 	setName(values->at(0));
 	setAge(std::stoul(values->at(1)));
 	setBuerge(values->at(2));
-	setExpenses(std::stod(values->at(3)));
+	setBalance(std::stod(values->at(3)));
 	setFlat(std::stoi(values->at(4)));
 }
 
 void Mieter::setMonthsInFlat(double months){
-	this->monthsInFlat = months;
+	this->monthsInFlat += months;
 }
 
 double Mieter::getMonthsInFlat(){

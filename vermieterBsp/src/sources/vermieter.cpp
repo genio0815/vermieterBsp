@@ -19,23 +19,23 @@ Vermieter::~Vermieter() {
 	std::cout<<"killing vermieter "<<Person::getName()<<std::endl;
 }
 
-double Vermieter::getIncome(){
+double Vermieter::getBalance(){
 	int index;
 	for (auto flatID : ownedFlats) {
 		if (!Storage::flats.at(flatID)->isAvailable()) {
 			index = Storage::flats.at(flatID)->getRenter();
-			income += Storage::persons.at(index)->getExpenses();
+			income += Storage::persons.at(index)->getBalance();
 		}
 	}
 	return income;
 }
-void Vermieter::setIncome(double income) {
+void Vermieter::setBalance(double income) {
 	this->income = income;
 }
 void Vermieter::printToScreen(){
 	std::cout<<"\nVermieter\t";
 	Person::printToScreen();
-	std::cout<<"income:\t"<<getIncome()<<"\tnumber of flats:\t"<<numberFlat()<<std::endl;
+	std::cout<<"income:\t"<<getBalance()<<"\tnumber of flats:\t"<<numberFlat()<<std::endl;
 }
 void Vermieter::addFlat() {
 	//this->ownedFlats.emplace_back(newFlat);
@@ -90,13 +90,13 @@ std::string Vermieter::csvLine() {
 	for (auto &flat : ownedFlats) {
 		flatindices += "/" + std::to_string(flat);
 	}
-	return "2;" + Person::csvLine() + ';' + std::to_string(getIncome()) + ';' + std::to_string(numberFlat()) + flatindices;
+	return "2;" + Person::csvLine() + ';' + std::to_string(getBalance()) + ';' + std::to_string(numberFlat()) + flatindices;
 }
 
 void Vermieter::readProperties(std::vector<std::string> *values) {
 	setName(values->at(0));
 	setAge(std::stoul(values->at(1)));
-	setIncome(std::stod(values->at(2)));
+	setBalance(std::stod(values->at(2)));
 	std::vector<unsigned int> flatindices = Storage::splitUInt(values->at(3),"/");
 	for (auto &ind : flatindices) {
 		ownedFlats.push_back(ind);
