@@ -57,3 +57,11 @@ void Mieter::readProperties(std::vector<std::string> *values) {
 	setExpenses(std::stod(values->at(3)));
 	setFlat(std::stoi(values->at(4)));
 }
+
+void Mieter::setMonthsInFlat(double months){
+	this->monthsInFlat = months;
+}
+
+double Mieter::getMonthsInFlat(){
+	return this->monthsInFlat;
+}

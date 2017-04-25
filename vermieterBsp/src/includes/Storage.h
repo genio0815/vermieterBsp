@@ -36,13 +36,14 @@ class Storage {
 		static unsigned int checkUInt(const std::string&);
 		//static void adoptVermieter(std::unique_ptr<Person>&);
 		static void adoptVermieter(Vermieter*);
-		static std::vector<std::unique_ptr<Person>> persons;
-		static std::vector<std::unique_ptr<MietObject>> flats;
+		static std::vector<std::unique_ptr<Person> > persons;
+		static std::vector<std::unique_ptr<MietObject> > flats;
 		static void readCSV(const std::string&);
 		static void writeCSV(const std::string&);
 		static std::vector<std::string> split(const std::string& str, const std::string& delim);
 		static std::vector<unsigned int> splitUInt(const std::string& str, const std::string& delim);
 		static void deleteOwnerFromFlat(unsigned int);
+		static void proceedInTime();
 };
 
 #endif /* SRC_INCLUDES_STORAGE_H_ */

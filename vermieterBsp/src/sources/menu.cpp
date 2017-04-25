@@ -9,7 +9,7 @@
 #include <string>
 
 
-std::vector<std::string> mainOpts = {"Persons Submenu", "Flats Submenu", "Read input file", "Write to file" ,"Quit"};
+std::vector<std::string> mainOpts = {"Persons Submenu", "Flats Submenu", "Proceed in time","Read input file", "Write to file" ,"Quit"};
 std::vector<std::string> flatOpts = {"List flats", "Add flat", "Return to main menu", "Quit"};
 std::vector<std::string> personOpts = {"List persons", "Add person", "Return to main menu", "Quit"};
 
@@ -38,17 +38,20 @@ std::unique_ptr<BaseMenu> MainMenu::getNextMenu(int choice, bool& iIsQuitOptionS
 		case 2:
 			aNewMenu = std::unique_ptr<BaseMenu>(new FlatsMenu);
 			break;
-		case 3: {
+		case 3:
+			Storage::proceedInTime();
+			break;
+		case 4: {
 			std::string infile;
 			std::cout<<"\nenter file name: ";
 			std::cin >> infile;
 			Storage::readCSV(infile);
 			break;
 		}
-		case 4:
+		case 5:
 			Storage::writeCSV("myCsv.csv");
 			break;
-		case 5:
+		case 6:
 			iIsQuitOptionSelected = true;
 			break;
 		default: {

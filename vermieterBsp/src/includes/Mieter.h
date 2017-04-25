@@ -28,6 +28,8 @@ class Mieter: public Person {
 		int getFlat() const;
 		virtual std::string csvLine();
 		virtual void readProperties(std::vector<std::string> *);
+		void setMonthsInFlat(double);
+		double getMonthsInFlat();
 
 	private:
 		int flatIndex;

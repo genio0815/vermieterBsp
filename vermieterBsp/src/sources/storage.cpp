@@ -52,7 +52,7 @@ int Storage::addPerson() {
 		case 3:
 			return -1;
 	}
-	return persons.size();
+	return persons.size()-1;
 }
 
 int Storage::addFlat() {
@@ -72,7 +72,7 @@ int Storage::addFlat() {
 		case 3:
 			return -1;
 	}
-	return flats.size();
+	return flats.size()-1;
 }
 
 int Storage::checkInt(const std::string &text, std::vector<int> *opt = nullptr ) {
@@ -241,4 +241,20 @@ void Storage::deleteOwnerFromFlat(unsigned int flatId) {
 	unsigned int persId = flats.at(flatId)->getOwner();
 	persons.at(persId)-> removeFlat(flatId);
 	flats.at(flatId)->setOwner(persons.size()); // what a hack...but works by design...
+}
+
+void Storage::proceedInTime() {
+	double costs;
+	double span = checkDouble("/nenter number of months to wait/n");
+
+	for (auto &pers : persons) {
+		pers->setMonthsInFlat(span);
+	}
+
+	for (auto &flat : flats){
+		if(!flat->isAv()) {
+			costs  = span * flat->getRate();
+			persons.at(flat->getRenter())->
+		}
+	}
 }

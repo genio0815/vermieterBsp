@@ -22,8 +22,10 @@ Vermieter::~Vermieter() {
 double Vermieter::getIncome(){
 	int index;
 	for (auto flatID : ownedFlats) {
-		index = Storage::flats.at(flatID)->getRenter();
-		income += Storage::persons.at(index)->getExpenses();
+		if (!Storage::flats.at(flatID)->isAvailable()) {
+			index = Storage::flats.at(flatID)->getRenter();
+			income += Storage::persons.at(index)->getExpenses();
+		}
 	}
 	return income;
 }
