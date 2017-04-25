@@ -27,6 +27,14 @@ class MietObject {
 		virtual void setProperties();
 		virtual std::string csvLine();
 		virtual void readProperties(std::vector<std::string> *) {};
+		unsigned int getOwner();
+		unsigned int getRenter();
+		void setOwner(unsigned int ownerId);
+		void setRenter(unsigned int renterId);
+		bool isAvailable();
+		void setAv(bool);
+		void setRate(double);
+		double getRate();
 
 	protected:
 		double getPrize();
@@ -35,16 +43,14 @@ class MietObject {
 		void setSize(double);
 		const std::string& getAddress();
 		void setAddress(const std::string &);
-		Vermieter getOwner();
-		Mieter getRenter();
-		void setOwner(Vermieter own);
-		void setRenter(Mieter rent);
 
 	private:
+		bool isAv;
 		double prize;
 		double size;
-		Vermieter owner();
-		Mieter renter();
+		double monthlyRate;
+		unsigned int ownerId;
+		unsigned int renterId;
 		std::string address;
 };
 

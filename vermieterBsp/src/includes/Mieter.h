@@ -18,11 +18,11 @@ class Mieter: public Person {
 	public:
 		Mieter();
 
-		double getExpenses() const;
+		double getExpenses();
 		void setExpenses(double);
 		void printToScreen();
-		const std::string& getMovingInDate() const;
-		void setMovingInDate(const std::string &);
+		const std::string& getBuerge() const;
+		void setBuerge(const std::string &);
 		void setProperties();
 		void setFlat(int);
 		int getFlat() const;
@@ -31,8 +31,9 @@ class Mieter: public Person {
 
 	private:
 		int flatIndex;
+		double monthsInFlat;
 		double expenses;
-		std::string movingInDate;
+		std::string buerge;
 };
 
 #endif

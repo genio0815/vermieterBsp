@@ -20,6 +20,9 @@ class Person {
 		virtual void setProperties();
 		virtual std::string csvLine();
 		virtual void readProperties(std::vector<std::string> *);
+		// add following for childs and override them...otherwise i'd implement visitor pattern...
+		void removeFlat(unsigned int) {};
+		double getExpenses() {return 0.0;};
 
 	protected:
 		unsigned int getAge() const;

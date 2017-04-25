@@ -18,21 +18,21 @@
 class Vermieter: public Person {
 	public:
 		Vermieter();
-		double getIncome() const;
+		double getIncome();
 		void setIncome(double);
 		void printToScreen();
 		void addFlat();
-		void removeFlatByIndex(int);
 		size_t numberFlat();
 		void setProperties();
 		std::string csvLine();
 		virtual void readProperties(std::vector<std::string> *);
+		void removeFlat(unsigned int);
 
 		~Vermieter();
 
 	private:
 		double income;
-		std::vector<int> ownedFlats; // stored via flats ID index
+		std::vector<unsigned int> ownedFlats; // stored via flats ID index
 };
 
 #endif

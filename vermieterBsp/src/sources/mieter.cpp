@@ -14,7 +14,9 @@ Mieter::Mieter() : Person() {
 	expenses = 0.0;
 }
 
-double Mieter::getExpenses() const {
+double Mieter::getExpenses(){
+	double rate = Storage::flats.at(getFlat())->getRate();
+	expenses = monthsInFlat * rate;
 	return expenses;
 }
 void Mieter::setExpenses(double expenses) {
@@ -23,14 +25,14 @@ void Mieter::setExpenses(double expenses) {
 void Mieter::printToScreen(){
 	std::cout<<"\nMieter\t";
 	Person::printToScreen();
-	std::cout<<"Einzugs Datum:\t"<<getMovingInDate()<<std::endl;
+	std::cout<<"Buerge:\t"<<getBuerge()<<std::endl;
 	std::cout<<"expenses:\t"<<getExpenses()<<std::endl;
 }
-const std::string& Mieter::getMovingInDate() const {
-	return movingInDate;
+const std::string& Mieter::getBuerge() const {
+	return buerge;
 }
-void Mieter::setMovingInDate(const std::string& movingInDate) {
-	this->movingInDate = movingInDate;
+void Mieter::setBuerge(const std::string& buerg) {
+	this->buerge = buerg;
 }
 void Mieter::setFlat(int flatIndex) {
 	this->flatIndex = flatIndex;
@@ -40,17 +42,18 @@ int Mieter::getFlat() const {
 }
 void Mieter::setProperties() {
 	Person::setProperties();
-	movingInDate = Storage::checkString("enter Einzugs Datum");
-	setFlat(0);
+	std::cout<<"assign existing flat to Mieter"<<std::endl;
+	setBuerge(Storage::checkString("enter Buerge"));
+	setFlat(0); //TODO
 }
 
 std::string Mieter::csvLine(){
-	return "1;" + Person::csvLine() + ';' + getMovingInDate() + ';' + std::to_string(getExpenses()) + ';' + std::to_string(getFlat());
+	return "1;" + Person::csvLine() + ';' + getBuerge() + ';' + std::to_string(getExpenses()) + ';' + std::to_string(getFlat());
 }
 void Mieter::readProperties(std::vector<std::string> *values) {
 	setName(values->at(0));
 	setAge(std::stoul(values->at(1)));
-	setMovingInDate(values->at(2));
+	setBuerge(values->at(2));
 	setExpenses(std::stod(values->at(3)));
 	setFlat(std::stoi(values->at(4)));
 }

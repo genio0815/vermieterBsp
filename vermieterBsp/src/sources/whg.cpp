@@ -33,6 +33,10 @@ std::string Whg::csvLine() {
 
 void Whg::readProperties(std::vector<std::string> *values) {
 	setAddress(values->at(0));
-	setSize(std::stod(values->at(1)));
-	setPrize(std::stod(values->at(2)));
+	setAv(values->at(1) == "1" ?  true : false);
+	setSize(std::stod(values->at(2)));
+	setPrize(std::stod(values->at(3)));
+	setOwner(std::stoul(values->at(4)));
+	setRenter(std::stoul(values->at(5)));
+	setCategory(values->at(6));
 }

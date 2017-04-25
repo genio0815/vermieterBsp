@@ -9,12 +9,9 @@
 #include <memory> // for unique_ptr
 
 #include "includes/Haus.h"
-//#include "includes/MietObject.h"
 #include "includes/Mieter.h"
-//#include "includes/Person.h"
 #include "includes/Vermieter.h"
 #include "includes/Menu.h"
-//#include "includes/Storage.h"
 
 using namespace std;
 

@@ -52,16 +52,18 @@ void Haus::setProperties() {
 }
 
 std::string Haus::csvLine() {
-	return "3;" + MietObject::csvLine() + ';' + getConstructionDate() + ';' + std::to_string(isHasCellar());
+	return "3;" + MietObject::csvLine() + ';' + getConstructionDate() + ';' + std::to_string(getFloors()) + ';' + std::to_string(isHasCellar());
 }
 
 void Haus::readProperties(std::vector<std::string> *values) {
 	setAddress(values->at(0));
-	setSize(std::stod(values->at(1)));
-	setPrize(std::stod(values->at(2)));
-
-//	setName(values->at(0));
-//		setAge(std::stoul(values->at(1)));
-//		setIncome(std::stod(values->at(2)));
+	setAv(values->at(1) == "1" ?  true : false);
+	setSize(std::stod(values->at(2)));
+	setPrize(std::stod(values->at(3)));
+	setOwner(std::stoul(values->at(4)));
+	setRenter(std::stoul(values->at(5)));
+	setConstuctionDate(values->at(6));
+	setFloors(std::stoul(values->at(7)));
+	setHasCellar(values->at(8) == "1" ?  true : false);
 }
 

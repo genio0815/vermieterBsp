@@ -51,16 +51,13 @@ int Storage::addPerson() {
 			break;
 		case 3:
 			return -1;
-		default:
-			addPerson();
 	}
 	return persons.size();
 }
 
 int Storage::addFlat() {
-	std::string address;
-	std::vector<int> opt = {1,2,3};
 
+	std::vector<int> opt = {1,2,3};
 	int type = checkInt("\nenter Mietobject type:\n\t(1) Haus\n\t(2) Whg\n\t(3) go back\n", &opt);
 
 	switch (type) {
@@ -74,8 +71,6 @@ int Storage::addFlat() {
 			break;
 		case 3:
 			return -1;
-		default:
-			addFlat();
 	}
 	return flats.size();
 }
@@ -224,4 +219,26 @@ std::vector<std::string> Storage::split(const std::string& str, const std::strin
     }
 
     return tokens;
+}
+
+std::vector<unsigned int> Storage::splitUInt(const std::string& str, const std::string& delim) {
+	std::vector<unsigned int> tokens;
+    size_t prev = 0, pos = 0;
+    do
+    {
+        pos = str.find(delim, prev);
+        if (pos == std::string::npos) pos = str.length();
+        std::string token = str.substr(prev, pos-prev);
+        if (!token.empty()) tokens.push_back(std::stoul(token));
+        prev = pos + delim.length();
+    }
+    while (pos < str.length() && prev < str.length());
+
+    return tokens;
+}
+
+void Storage::deleteOwnerFromFlat(unsigned int flatId) {
+	unsigned int persId = flats.at(flatId)->getOwner();
+	persons.at(persId)-> removeFlat(flatId);
+	flats.at(flatId)->setOwner(persons.size()); // what a hack...but works by design...
 }
