@@ -22,10 +22,10 @@ Vermieter::~Vermieter() {
 double Vermieter::getBalance(){
 	int index;
 	for (auto flatID : ownedFlats) {
-		if (!Storage::flats.at(flatID)->isAvailable()) {
-			index = Storage::flats.at(flatID)->getRenter();
-			income += Storage::persons.at(index)->getBalance();
-		}
+		//if (!Storage::flats.at(flatID)->isAvailable()) {
+		//	index = Storage::flats.at(flatID)->getRenter();
+		//	income += Storage::persons.at(index)->getBalance();
+		//}
 	}
 	return income;
 }
@@ -55,7 +55,7 @@ void Vermieter::setProperties() {
 	}
 
 	if (token.compare("NEW") == 0) {
-		int ok = Storage::addFlat();
+		unsigned int ok = Storage::addFlat();
 		if (ok != -1) ownedFlats.push_back(ok);
 	} else if (token.compare("EX") == 0) {
 		if (Storage::flats.size() > 0) {

@@ -31,8 +31,6 @@ class MietObject {
 		unsigned int getRenter();
 		void setOwner(unsigned int ownerId);
 		void setRenter(unsigned int renterId);
-		bool isAvailable();
-		void setAv(bool);
 		void setRate(double);
 		double getRate();
 		void setProfit(double);
@@ -43,17 +41,13 @@ class MietObject {
 		void setPrize(double);
 		double getSize();
 		void setSize(double);
-		const std::string& getAddress();
-		void setAddress(const std::string &);
-
-	private:
-		bool isAv;
+		std::string address;
+		bool isAvailable;
 		double prize;
 		double size;
 		double monthlyRate;
 		unsigned int ownerId;
 		unsigned int renterId;
-		std::string address;
 };
 
 //#endif

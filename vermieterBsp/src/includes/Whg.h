@@ -13,8 +13,6 @@ public:
     virtual ~Whg() {};
     void virtual printToScreen();
     virtual std::string csvLine();
-    const std::string& getCategory() const;
-    void setCategory(const std::string &);
     virtual void setProperties();
     virtual void readProperties(std::vector<std::string> *);
 

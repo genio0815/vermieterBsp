@@ -7,8 +7,8 @@
 
 #include "../includes/Storage.h"
 #include "../includes/CSVFile.h"
-#include <algorithm>
-#include <fstream>
+//#include <algorithm>
+//#include <fstream>
 
 // initialize static vectors
 std::vector<std::unique_ptr<Person>> Storage::persons;
@@ -51,6 +51,8 @@ int Storage::addPerson() {
 			break;
 		case 3:
 			return -1;
+		default:
+			break;
 	}
 	return persons.size()-1;
 }
@@ -71,6 +73,8 @@ int Storage::addFlat() {
 			break;
 		case 3:
 			return -1;
+		default:
+			break;
 	}
 	return flats.size()-1;
 }
@@ -247,10 +251,10 @@ void Storage::proceedInTime() {
 	double span = checkDouble("\nenter number of months to wait\n");
 
 	for (auto &flat : flats){
-		if(!flat->isAvailable()) {
-			persons.at(flat->getRenter())->setMonthsInFlat(span);
-			persons.at(flat->getRenter())->updateBalance();
-		}
+		//if(!flat->isAvailable()) {
+		//	persons.at(flat->getRenter())->setMonthsInFlat(span);
+		//	persons.at(flat->getRenter())->updateBalance();
+		//}
 	}
 
 	for (auto &flat : flats){

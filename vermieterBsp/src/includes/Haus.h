@@ -19,18 +19,12 @@ class Haus: public MietObject {
 		virtual void printToScreen();
 		virtual std::string csvLine();
 		virtual void readProperties(std::vector<std::string> *);
-		const std::string& getConstructionDate();
-		void setConstuctionDate(const std::string&);
-		unsigned int getFloors();
-		void setFloors(unsigned int);
-		bool isHasCellar();
-		void setHasCellar(bool);
 		void setProperties();
 
 	private:
 		unsigned int floors;
 		bool hasCellar;
-		std::string constuctionDate;
+		std::string constructionDate;
 };
 
 #endif

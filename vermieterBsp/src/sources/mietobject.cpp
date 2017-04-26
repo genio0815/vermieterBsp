@@ -11,19 +11,12 @@
 MietObject::MietObject() {
 	setPrize(0.0);
 	setSize(0.0);
-	setAv(true);
+	isAvailable = true;
 }
 
-void MietObject::setAv(bool av) {
-	isAv = av;
-}
-
-bool MietObject::isAvailable() {
-	return isAv;
-}
 void MietObject::printToScreen() {
-	std::cout<<"is Available:\t"<<(isAvailable() ? "Yes" : "NO")<<std::endl;
-	std::cout<<"Addresse:\t"<<getAddress()<<std::endl;
+	std::cout<<"is Available:\t"<<(isAvailable ? "Yes" : "NO")<<std::endl;
+	std::cout<<"Addresse:\t"<<address<<std::endl;
 	std::cout<<"Groesse:\t"<<getSize()<<std::endl;
 	std::cout<<"Preis:\t"<<getPrize()<<std::endl;
 }
@@ -57,15 +50,8 @@ double MietObject::getRate() {
 	return monthlyRate;
 }
 
-const std::string& MietObject::getAddress(){
-	return address;
-}
-void MietObject::setAddress(const std::string& address) {
-	this->address = address;
-}
-
 std::string MietObject::csvLine() {
-	return getAddress() +';' + std::to_string(isAvailable())+ ';'  + std::to_string(getSize()) + ';' + std::to_string(getPrize()) +
+	return address +';' + std::to_string(isAvailable)+ ';'  + std::to_string(getSize()) + ';' + std::to_string(getPrize()) +
 			';' + std::to_string(getOwner()) + ';' + std::to_string(getRenter());
 }
 
