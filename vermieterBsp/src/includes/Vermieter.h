@@ -18,7 +18,7 @@
 class Vermieter: public Person {
 	public:
 		Vermieter();
-		void updateBalance();
+        virtual void updateBalance(double);
 		double getBalance();
 		void setBalance(double);
 		void printToScreen();
@@ -28,8 +28,6 @@ class Vermieter: public Person {
 		std::string csvLine();
 		virtual void readProperties(std::vector<std::string> *);
 		void removeFlat(unsigned int);
-
-		~Vermieter();
 
 	private:
 		double income;

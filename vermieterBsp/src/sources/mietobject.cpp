@@ -9,50 +9,30 @@
 #include "../includes/Storage.h"
 
 MietObject::MietObject() {
-	setPrize(0.0);
-	setSize(0.0);
+	prize = 0.0;
+	size = 0.0;
 	isAvailable = true;
 }
 
 void MietObject::printToScreen() {
 	std::cout<<"is Available:\t"<<(isAvailable ? "Yes" : "NO")<<std::endl;
 	std::cout<<"Addresse:\t"<<address<<std::endl;
-	std::cout<<"Groesse:\t"<<getSize()<<std::endl;
-	std::cout<<"Preis:\t"<<getPrize()<<std::endl;
+	std::cout<<"Groesse:\t"<<size<<std::endl;
+	std::cout<<"Preis:\t"<<prize<<std::endl;
 }
 
 void MietObject::setProperties() {
 	address = Storage::checkString("enter Address");
 	size = Storage::checkDouble("enter size");
 	prize = Storage::checkDouble("enter prize");
-	// owner
-	// renter
-}
-
-double MietObject::getPrize(){
-	return prize;
-}
-void MietObject::setPrize(double prize) {
-	this->prize = prize;
-}
-double MietObject::getSize(){
-	return size;
-}
-void MietObject::setSize(double size) {
-	this->size = size;
-}
-
-void MietObject::setRate(double rate) {
-	this->monthlyRate = rate;
-}
-
-double MietObject::getRate() {
-	return monthlyRate;
+	//TODO
+	ownerId = Storage::checkUInt("enter Vermieter Id");
+	renterId = Storage::checkUInt("enter Mieter Id");
 }
 
 std::string MietObject::csvLine() {
-	return address +';' + std::to_string(isAvailable)+ ';'  + std::to_string(getSize()) + ';' + std::to_string(getPrize()) +
-			';' + std::to_string(getOwner()) + ';' + std::to_string(getRenter());
+	return address +';' + std::to_string(isAvailable)+ ';'  + std::to_string(size) + ';' + std::to_string(prize) +
+			';' + std::to_string(ownerId) + ';' + std::to_string(renterId);
 }
 
 unsigned int MietObject::getOwner() {
@@ -66,15 +46,14 @@ unsigned int MietObject::getRenter() {
 void MietObject::setOwner(unsigned int ownId) {
 	this->ownerId = ownId;
 }
+//
+//void MietObject::setRenter(unsigned int rentId) {
+//	this->renterId = rentId;
+//}
 
-void MietObject::setRenter(unsigned int rentId) {
-	this->renterId = rentId;
-}
-
-void MietObject::setProfit(double) {
-	;
-}
-
-double MietObject::getProfit(){
-	;
+double MietObject::updateProfit(double time){
+    if (!isAvailable) {
+        profit += monthlyRate * time;
+    }
+	return profit;
 }

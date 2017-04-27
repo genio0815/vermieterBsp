@@ -15,26 +15,22 @@
 class Person {
 	public:
 		Person();
+		// virtual (get reused & expanded in derived):
 		virtual void printToScreen();
 		virtual ~Person() {}; // quick & dirty
 		virtual void setProperties();
 		virtual std::string csvLine();
-		virtual void readProperties(std::vector<std::string> *);
-		// add following for childs and override them...otherwise i'd implement visitor pattern...
+
+		// pure virtual (have to be implemented in derived):
+		virtual void readProperties(std::vector<std::string> *) = 0;
+		virtual double getBalance() = 0;
+		virtual void updateBalance(double) = 0;
+
+		// just used for one child...ugly but avoid visitor pattern
 		void removeFlat(unsigned int) {};
-		void updateBalance() {};
-		void setBalance(double) {};
-		double getBalance() {return 0.0;};
 		void setMonthsInFlat(double) {};
-		double monthlyBalance() {return 0.0;};
 
 	protected:
-		unsigned int getAge() const;
-		void setAge(unsigned int age);
-		const std::string& getName() const;
-		void setName(const std::string &);
-
-	private:
 		std::string name;
 		unsigned int age;
 };

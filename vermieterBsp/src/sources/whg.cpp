@@ -26,9 +26,9 @@ std::string Whg::csvLine() {
 void Whg::readProperties(std::vector<std::string> *values) {
 	this-> address = values->at(0);
 	this-> isAvailable = (values->at(1) == "1" ?  true : false);
-	setSize(std::stod(values->at(2)));
-	setPrize(std::stod(values->at(3)));
-	setOwner(std::stoul(values->at(4)));
-	setRenter(std::stoul(values->at(5)));
-	this->category = values->at(6);
+	this-> size = stod(values->at(2));
+	this-> prize = stod(values->at(3));
+	this-> ownerId = std::stoul(values->at(4));
+	this-> renterId = std::stoul(values->at(5));
+	this-> category = values->at(6);
 }

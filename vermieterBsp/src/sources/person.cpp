@@ -18,27 +18,11 @@ void Person::setProperties() {
 }
 
 void Person::printToScreen(){
-	std::cout<<getName()<<"\tage:\t"<<getAge()<<std::endl;
-}
-
-unsigned int Person::getAge() const {
-	return age;
-}
-
-void Person::setAge(unsigned int age) {
-	this->age = age;
-}
-
-const std::string& Person::getName() const {
-	return name;
-}
-
-void Person::setName(const std::string& name) {
-	this->name = name;
+	std::cout<<name<<"\tage:\t"<<age<<std::endl;
 }
 
 std::string Person::csvLine(){
-	return getName() + ';' + std::to_string(getAge());
+	return name + ';' + std::to_string(age);
 }
 void Person::readProperties(std::vector<std::string> *) {
 }

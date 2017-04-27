@@ -34,7 +34,6 @@ class Storage {
 		static std::string checkString(const std::string&);
 		static bool checkBool(const std::string&);
 		static unsigned int checkUInt(const std::string&);
-		//static void adoptVermieter(std::unique_ptr<Person>&);
 		static void adoptVermieter(Vermieter*);
 		static std::vector<std::unique_ptr<Person> > persons;
 		static std::vector<std::unique_ptr<MietObject> > flats;

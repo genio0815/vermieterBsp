@@ -18,9 +18,8 @@ double Mieter::getBalance() {
 	return expenses;
 }
 
-void Mieter::updateBalance(){
-	double rate = Storage::flats.at(getFlat())->getRate();
-	expenses += monthsInFlat * rate;
+void Mieter::updateBalance(double exp){
+	expenses += exp;
 }
 void Mieter::setBalance(double expenses) {
 	this->expenses = expenses;
@@ -54,8 +53,8 @@ std::string Mieter::csvLine(){
 	return "1;" + Person::csvLine() + ';' + getBuerge() + ';' + std::to_string(getBalance()) + ';' + std::to_string(getFlat());
 }
 void Mieter::readProperties(std::vector<std::string> *values) {
-	setName(values->at(0));
-	setAge(std::stoul(values->at(1)));
+	this-> name = values->at(0);
+	this-> age = std::stoul(values->at(1));
 	setBuerge(values->at(2));
 	setBalance(std::stod(values->at(3)));
 	setFlat(std::stoi(values->at(4)));

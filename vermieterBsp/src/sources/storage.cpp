@@ -7,8 +7,6 @@
 
 #include "../includes/Storage.h"
 #include "../includes/CSVFile.h"
-//#include <algorithm>
-//#include <fstream>
 
 // initialize static vectors
 std::vector<std::unique_ptr<Person>> Storage::persons;
@@ -54,7 +52,7 @@ int Storage::addPerson() {
 		default:
 			break;
 	}
-	return persons.size()-1;
+	return int(persons.size()-1);
 }
 
 int Storage::addFlat() {
@@ -76,7 +74,7 @@ int Storage::addFlat() {
 		default:
 			break;
 	}
-	return flats.size()-1;
+	return int(flats.size()-1);
 }
 
 int Storage::checkInt(const std::string &text, std::vector<int> *opt = nullptr ) {
@@ -248,16 +246,16 @@ void Storage::deleteOwnerFromFlat(unsigned int flatId) {
 }
 
 void Storage::proceedInTime() {
-	double span = checkDouble("\nenter number of months to wait\n");
+	double months = checkDouble("\nenter number of months to wait\n");
+    double amount;
 
+    // that's ugly...
 	for (auto &flat : flats){
-		//if(!flat->isAvailable()) {
-		//	persons.at(flat->getRenter())->setMonthsInFlat(span);
-		//	persons.at(flat->getRenter())->updateBalance();
-		//}
-	}
+        amount = flat->updateProfit(months);
 
-	for (auto &flat : flats){
-		persons.at(flat->getOwner())->updateBalance();
+        persons.at(flat->getRenter())->updateBalance(amount);
+        persons.at(flat->getRenter())->setMonthsInFlat(months);
+
+        persons.at(flat->getOwner())->updateBalance(amount);
 	}
 }

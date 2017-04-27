@@ -17,7 +17,7 @@
 class Mieter: public Person {
 	public:
 		Mieter();
-		void updateBalance();
+		virtual void updateBalance(double);
 		double getBalance();
 		void setBalance(double);
 		void printToScreen();
