@@ -41,14 +41,53 @@ void MietObject::setProperties() {
 	address = Storage::checkString("enter Address");
 	size = Storage::checkDouble("enter size");
 	prize = Storage::checkDouble("enter prize");
+
+	/*std::string token;
+
+	if (Storage::persons.size() > 0) {
+		token = Storage::checkString("to assign existing Vermieter enter: YES");
+		if (token.compare("YES") == 0) {
+			// just to check if valid index is entered
+			std::vector<int> existingPersons;
+			for (unsigned int i = 0; i< Storage::persons.size(); ++i) {
+				existingPersons.push_back(int(i));
+			}
+
+	} else {
+		token = Storage::checkString("to add a new flat enter: NEW\n(currently no flats present)\notherwise continue");
+	}
+
+	if (token.compare("NEW") == 0) {
+		Storage::addFlat();
+	} else if (token.compare("EX") == 0) {
+		if (Storage::flats.size() > 0) {
+			// just to check if valid index is entered
+			std::vector<int> existingFlats;
+			for (unsigned int i = 0; i< Storage::flats.size(); ++i) {
+				existingFlats.push_back(int(i));
+			}
+			token = Storage::checkString("\nto list existing flats enter: YES");
+			if (token.compare("YES") == 0) Storage::listFlats();
+			int index = Storage::checkInt("enter flat ID",&existingFlats);
+			Storage::flats.at(index)->setRenterPtr(std::make_shared<Mieter>(*this));
+		}
+	}
+*/
+
 	//TODO
 	//ownerId = Storage::checkUInt("enter Vermieter Id");
 	//renterId = Storage::checkUInt("enter Mieter Id");
 }
 
 std::string MietObject::csvLine() {
-	return address +';' + std::to_string(isAvailable)+ ';'  + std::to_string(size) + ';' + std::to_string(prize) +
-			';' + std::to_string(owner->getId()) + ';' + std::to_string(renter->getId());
+
+	std::string res;
+	res = address +';' + std::to_string(isAvailable)+ ';'  + std::to_string(size) + ';' + std::to_string(prize);
+
+	if (owner != nullptr) res += ';' + std::to_string(owner->getId());
+	if (renter != nullptr) res +=  ';' + std::to_string(renter->getId());
+
+	return res;
 }
 
 std::shared_ptr<Mieter> MietObject::getRenterPtr() {

@@ -41,20 +41,19 @@ void Storage::addPerson() {
 	std::vector<int> opt = {1,2,3};
 	int type = checkInt("\nenter person type:\n\t(1) Vermieter\n\t(2) Mieter\n\t(3) go back\n", &opt);
 
+    // ignoring def. case
 	switch (type) {
 		case 1:
 			persons.push_back(std::make_shared<Vermieter>());
-			persons.back()->setProperties();
 			break;
 		case 2:
 			persons.push_back(std::make_shared<Mieter>());
-			persons.back()->setProperties();
 			break;
 		case 3:
 			return;
-		default:
-			break;
 	}
+    persons.back()->setProperties();
+    persons.back()->setId(persons.size()-1);
 	return;
 }
 
@@ -63,20 +62,18 @@ void Storage::addFlat() {
 	std::vector<int> opt = {1,2,3};
 	int type = checkInt("\nenter Mietobject type:\n\t(1) Haus\n\t(2) Whg\n\t(3) go back\n", &opt);
 
+    // ignoring def. case
 	switch (type) {
 		case 1:
 			flats.push_back(std::make_shared<Haus>());
-			flats.back()->setProperties();
 			break;
 		case 2:
 			flats.push_back(std::make_shared<Whg>());
-			flats.back()->setProperties();
 			break;
 		case 3:
 			return;
-		default:
-			break;
 	}
+    flats.back()->setProperties();
 	return;
 }
 
@@ -132,16 +129,28 @@ double Storage::checkDouble(const std::string &text) {
 	return doubleVal;
 }
 
-unsigned int Storage::checkUInt(const std::string &text) {
+unsigned int Storage::checkUInt(const std::string &text, std::vector<unsigned int> *opt = nullptr) {
+
 	unsigned int uintVal;
 	std::cout<<text<<std::endl;
-	while(!(std::cin >> uintVal)) {
-		std::cerr<<" invalid choice, unsigned integer value required try again\n"<<text<<std::endl;
-		std::cin.clear();
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	}
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	return uintVal;
+
+    if (opt != nullptr) {
+        while(!(std::cin >> uintVal) || (std::find(opt->begin(), opt->end(), uintVal) == opt->end())) {
+            std::cerr<<"\ninvalid choice, please select of the following unsigned integers\n"<<std::endl;
+            for (auto &o : *opt) std::cout<<o<<' ';
+            std::cout<<std::endl;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    } else {
+        while(!(std::cin >> uintVal)) {
+            std::cerr<<"invalid choice, unsigned integer value required try again\n"<<text<<std::endl;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    return uintVal;
 }
 
 void Storage::writeCSV(const std::string &filename) {
@@ -156,8 +165,11 @@ void Storage::writeCSV(const std::string &filename) {
 
 		std::cout<<"\n"<<i<<" person tuples successfully written into file:\t"<<filename<<std::endl;
 
-		for (i = 0; i< flats.size(); ++i)
-			csv<<flats.at(i)->csvLine()<< endrow;;
+
+		for (i = 0; i< flats.size(); ++i) {
+            std::cout<<flats.at(i)->csvLine();
+            csv << flats.at(i)->csvLine() << endrow;;
+        }
 
 		std::cout<<"\n"<<i<<" flat tuples successfully written into file:\t"<<filename<<std::endl;
 
@@ -243,6 +255,61 @@ std::vector<unsigned int> Storage::splitUInt(const std::string& str, const std::
 
     return tokens;
 }
+
+void Storage::changeOwner() {
+
+    if (flats.size() == 0 || persons.size() == 0) {
+        std::cout<<"no flats or persons entered yet...returning"<<std::endl;
+        return;
+    }
+
+    unsigned int i, k;
+    std::vector<unsigned int> vermieterIds, flatIds;
+
+    for (i = 0; i < persons.size(); ++i) {
+        if (persons.at(i)->getType()) {  //Vermieter true
+            vermieterIds.push_back(flats.at(i)->getOwnerPtr()->getId());
+        }
+    }
+
+    for (i =0; i < flats.size(); ++i) {
+        flatIds.push_back(i);
+    }
+
+    i = checkUInt("enter ID of flat to adopt:", &flatIds);
+    k = checkUInt("select available Vermieter:", &vermieterIds);
+
+    std::cout<<"changing owner from "<<flats.at(i)->getOwnerPtr()->getName()<<" to " <<persons.at(k)->getName();
+    flats.at(i)->setOwnerPtr(std::static_pointer_cast<Vermieter> (persons.at(k)));
+}
+
+void Storage::changeRenter() {
+
+    if (flats.size() == 0 || persons.size() == 0) {
+        std::cout<<"no flats or persons entered yet...returning"<<std::endl;
+        return;
+    }
+
+    unsigned int i, k;
+    std::vector<unsigned int> renterIds, flatIds;
+
+    for (i = 0; i < persons.size(); ++i) {
+        if (!persons.at(i)->getType()) {  //Mieter false
+            renterIds.push_back(flats.at(i)->getRenterPtr()->getId());
+        }
+    }
+
+    for (i =0; i < flats.size(); ++i) {
+        flatIds.push_back(i);
+    }
+
+    i = checkUInt("enter ID of flat to dopt:", &flatIds);
+    k = checkUInt("select available Vermieter:", &renterIds);
+
+    std::cout<<"changing owner from "<<flats.at(i)->getRenterPtr()->getName()<<" to " <<persons.at(k)->getName();
+    flats.at(i)->setRenterPtr(std::static_pointer_cast<Mieter> (persons.at(k)));
+}
+
 
 void Storage::proceedInTime() {
 	double months = checkDouble("\nenter number of months to wait\n");

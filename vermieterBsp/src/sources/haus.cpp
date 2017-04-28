@@ -22,7 +22,7 @@ void Haus::printToScreen() {
 void Haus::setProperties() {
 	MietObject::setProperties();
 	this->constructionDate = Storage::checkString("enter Baujahr");
-	this->floors = Storage::checkUInt("Anzahl Stockwerke");
+	this->floors = Storage::checkUInt("Anzahl Stockwerke", nullptr);
 	this->hasCellar = Storage::checkBool("hat Keller (0): No (1): Yes");
 }
 

@@ -10,7 +10,8 @@
 
 
 std::vector<std::string> mainOpts = {"Persons Submenu", "Flats Submenu", "Proceed in time","Read input file", "Write to file" ,"Quit"};
-std::vector<std::string> flatOpts = {"List flats", "Add flat", "Return to main menu", "Quit"};
+std::vector<std::string> flatOpts = {"List flats", "Add flat", "Alter Flat Owner", "Alter Flat Renter",
+									 "Return to main menu", "Quit"};
 std::vector<std::string> personOpts = {"List persons", "Add person", "Return to main menu", "Quit"};
 
 BaseMenu::BaseMenu() {
@@ -107,10 +108,16 @@ std::unique_ptr<BaseMenu> FlatsMenu::getNextMenu(int choice, bool& iIsQuitOption
 			Storage::addFlat();
 			break;
 		case 3:
+			Storage::changeOwner();
+			break;
+		case 4:
+			Storage::changeRenter();
+			break;
+		case 5:
 			std::cout<<"return to main menu"<<std::endl;
 			aNewMenu = std::unique_ptr<BaseMenu>(new MainMenu);
 			break;
-		case 4:
+		case 6:
 			iIsQuitOptionSelected = true;
 			break;
 		default:

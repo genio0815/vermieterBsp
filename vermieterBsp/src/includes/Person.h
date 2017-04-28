@@ -19,6 +19,7 @@ class Person {
 		std::string getName();
 		void setId(unsigned int);
 		unsigned int getId();
+
 		// virtual (get reused & expanded in derived):
 		virtual void printToScreen();
 		virtual ~Person() {}; // quick & dirty
@@ -28,6 +29,9 @@ class Person {
 		// pure virtual (have to be implemented in derived):
 		virtual void readProperties(std::vector<std::string> *) = 0;
 		virtual void updateBalance(double) = 0;
+
+		// ugly but needed
+		virtual bool getType() = 0;
 
 	protected:
 		std::string name;

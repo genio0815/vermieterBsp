@@ -16,7 +16,7 @@ Person::Person(){
 
 void Person::setProperties() {
 	name = Storage::checkString("enter Name");
-	age = Storage::checkUInt("enter Age");
+	age = Storage::checkUInt("enter Age", nullptr);
 }
 
 void Person::printToScreen(){

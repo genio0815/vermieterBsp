@@ -28,6 +28,8 @@ class Vermieter: public Person {
 		std::string csvLine();
 		virtual void readProperties(std::vector<std::string> *);
 
+		virtual bool getType() {return true;};
+
 	private:
 		double income;
 };

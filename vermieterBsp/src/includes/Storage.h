@@ -33,7 +33,7 @@ class Storage {
 		static double checkDouble(const std::string&);
 		static std::string checkString(const std::string&);
 		static bool checkBool(const std::string&);
-		static unsigned int checkUInt(const std::string&);
+		static unsigned int checkUInt(const std::string&, std::vector<unsigned int>*);
 		static void adoptVermieter(Vermieter*);
 		static std::vector<std::shared_ptr<Person> > persons;
 		static std::vector<std::shared_ptr<MietObject> > flats;
@@ -42,6 +42,8 @@ class Storage {
 		static std::vector<std::string> split(const std::string& str, const std::string& delim);
 		static std::vector<unsigned int> splitUInt(const std::string& str, const std::string& delim);
 		static void proceedInTime();
+		static void changeOwner();
+		static void changeRenter();
 };
 
 #endif /* SRC_INCLUDES_STORAGE_H_ */

@@ -36,7 +36,7 @@ void Vermieter::setProperties() {
 	std::string token;
 
 	if (Storage::flats.size() > 0) {
-		token = Storage::checkString("to add a new flat enter: NEW\nto asign existing flat via its ID enter EX\notherwise continue");
+		token = Storage::checkString("to add a new flat enter: NEW\nto assign existing flat via its ID enter EX\notherwise continue");
 	} else {
 		token = Storage::checkString("to add a new flat enter: NEW\n(currently no flats present)\notherwise continue");
 	}

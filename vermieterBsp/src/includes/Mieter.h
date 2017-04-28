@@ -28,6 +28,8 @@ class Mieter: public Person {
 		virtual void readProperties(std::vector<std::string> *);
 		void setMonthsInFlat(double);
 
+		virtual bool getType() {return false;};
+
 	private:
 		double monthsInFlat;
 		double expenses;
