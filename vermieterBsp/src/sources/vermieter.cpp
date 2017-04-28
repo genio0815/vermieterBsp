@@ -28,13 +28,7 @@ void Vermieter::setBalance(double income) {
 void Vermieter::printToScreen(){
 	std::cout<<"\nVermieter\t";
 	Person::printToScreen();
-	std::cout<<"income:\t"<<income<<"\tnumber of flats:\t"<<numberFlat()<<std::endl;
-}
-void Vermieter::addFlat() {
-	//this->ownedFlats.emplace_back(newFlat);
-}
-size_t Vermieter::numberFlat() {
-	return ownedFlats.size();
+	std::cout<<"income:\t"<<income<<std::endl;
 }
 
 void Vermieter::setProperties() {
@@ -48,8 +42,7 @@ void Vermieter::setProperties() {
 	}
 
 	if (token.compare("NEW") == 0) {
-		int ok = Storage::addFlat();
-		if (ok != -1) ownedFlats.push_back(ok);
+		Storage::addFlat();
 	} else if (token.compare("EX") == 0) {
 		if (Storage::flats.size() > 0) {
 			// just to check if valid index is entered
@@ -58,41 +51,20 @@ void Vermieter::setProperties() {
 				existingFlats.push_back(int(i));
 			}
 			token = Storage::checkString("\nto list existing flats enter: YES");
-			if (token.compare("YES")) Storage::listFlats();
+			if (token.compare("YES") == 0) Storage::listFlats();
 			int index = Storage::checkInt("enter flat ID",&existingFlats);
-			// inhibit assigning the same flat twice to same owner
-			if (std::find(ownedFlats.begin(), ownedFlats.end(), index) != ownedFlats.end()) {
-				std::cout<<"selected flat is already owned by Vermieter "<<name<<std::endl;
-			} else {
-				// deleting prior owner from flat (there can be just one) and assign new one
-				Storage::deleteOwnerFromFlat((unsigned int)index);
-				ownedFlats.push_back(index);
-			}
+			Storage::flats.at(index)->setOwnerPtr(std::make_shared<Vermieter>(*this));
 		}
 	}
 }
 
-void Vermieter::removeFlat(unsigned int flatId){
-	std::vector<unsigned int>::iterator position = std::find(ownedFlats.begin(), ownedFlats.end(), flatId);
-	if (position != ownedFlats.end())
-		ownedFlats.erase(position);
-}
-
 std::string Vermieter::csvLine() {
-	std::string flatindices = ";";
-	for (auto &flat : ownedFlats) {
-		flatindices += "/" + std::to_string(flat);
-	}
-	return "2;" + Person::csvLine() + ';' + std::to_string(income) + ';' + std::to_string(numberFlat()) + flatindices;
+	return "2;" + Person::csvLine() + ';' + std::to_string(income) + ';' ;//+ std::to_string(numberFlat());
 }
 
 void Vermieter::readProperties(std::vector<std::string> *values) {
 	this-> name = values->at(0);
 	this-> age = std::stoul(values->at(1));
 	setBalance(std::stod(values->at(2)));
-	std::vector<unsigned int> flatindices = Storage::splitUInt(values->at(3),"/");
-	for (auto &ind : flatindices) {
-		ownedFlats.push_back(ind);
-	}
 }
 

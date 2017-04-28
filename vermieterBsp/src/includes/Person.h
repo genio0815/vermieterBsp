@@ -15,6 +15,10 @@
 class Person {
 	public:
 		Person();
+
+		std::string getName();
+		void setId(unsigned int);
+		unsigned int getId();
 		// virtual (get reused & expanded in derived):
 		virtual void printToScreen();
 		virtual ~Person() {}; // quick & dirty
@@ -23,16 +27,12 @@ class Person {
 
 		// pure virtual (have to be implemented in derived):
 		virtual void readProperties(std::vector<std::string> *) = 0;
-		virtual double getBalance() = 0;
 		virtual void updateBalance(double) = 0;
-
-		// just used for one child...ugly but avoid visitor pattern
-		void removeFlat(unsigned int) {};
-		void setMonthsInFlat(double) {};
 
 	protected:
 		std::string name;
 		unsigned int age;
+		unsigned int id;
 };
 
 #endif

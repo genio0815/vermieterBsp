@@ -7,10 +7,12 @@
 
 #include "../includes/Storage.h"
 #include "../includes/CSVFile.h"
+#include <algorithm>
 
 // initialize static vectors
-std::vector<std::unique_ptr<Person>> Storage::persons;
-std::vector<std::unique_ptr<MietObject>> Storage::flats;
+std::vector<std::shared_ptr<Person>> Storage::persons;
+std::vector<std::shared_ptr<MietObject>> Storage::flats;
+
 Storage::Storage() {}
 
 void Storage::listPersons() {
@@ -20,6 +22,7 @@ void Storage::listPersons() {
 		std::cout<<std::setfill('-')<<std::setw(80)<<std::endl;
 		std::cout<<"\nperson ID "<<id++<<std::endl;
 		pers->printToScreen();
+		std::cout<<pers.use_count()<<std::endl;
 	}
 }
 
@@ -33,48 +36,48 @@ void Storage::listFlats() {
 	}
 }
 
-int Storage::addPerson() {
+void Storage::addPerson() {
 
 	std::vector<int> opt = {1,2,3};
 	int type = checkInt("\nenter person type:\n\t(1) Vermieter\n\t(2) Mieter\n\t(3) go back\n", &opt);
 
 	switch (type) {
 		case 1:
-			persons.push_back(std::make_unique<Vermieter>());
+			persons.push_back(std::make_shared<Vermieter>());
 			persons.back()->setProperties();
 			break;
 		case 2:
-			persons.push_back(std::make_unique<Mieter>());
+			persons.push_back(std::make_shared<Mieter>());
 			persons.back()->setProperties();
 			break;
 		case 3:
-			return -1;
+			return;
 		default:
 			break;
 	}
-	return int(persons.size()-1);
+	return;
 }
 
-int Storage::addFlat() {
+void Storage::addFlat() {
 
 	std::vector<int> opt = {1,2,3};
 	int type = checkInt("\nenter Mietobject type:\n\t(1) Haus\n\t(2) Whg\n\t(3) go back\n", &opt);
 
 	switch (type) {
 		case 1:
-			flats.push_back(std::make_unique<Haus>());
+			flats.push_back(std::make_shared<Haus>());
 			flats.back()->setProperties();
 			break;
 		case 2:
-			flats.push_back(std::make_unique<Whg>());
+			flats.push_back(std::make_shared<Whg>());
 			flats.back()->setProperties();
 			break;
 		case 3:
-			return -1;
+			return;
 		default:
 			break;
 	}
-	return int(flats.size()-1);
+	return;
 }
 
 int Storage::checkInt(const std::string &text, std::vector<int> *opt = nullptr ) {
@@ -133,7 +136,7 @@ unsigned int Storage::checkUInt(const std::string &text) {
 	unsigned int uintVal;
 	std::cout<<text<<std::endl;
 	while(!(std::cin >> uintVal)) {
-		std::cerr<<uintVal<<" invalid choice, double value required try again\n"<<text<<std::endl;
+		std::cerr<<" invalid choice, unsigned integer value required try again\n"<<text<<std::endl;
 		std::cin.clear();
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	}
@@ -142,19 +145,21 @@ unsigned int Storage::checkUInt(const std::string &text) {
 }
 
 void Storage::writeCSV(const std::string &filename) {
+	unsigned int i;
 	try {
 		csvfile csv(filename);
-		for (auto const &flat : flats) {
-			csv<<flat->csvLine()<< endrow;;
+
+		for (i = 0; i< persons.size(); ++i) {
+			persons.at(i)->setId(i);
+			csv<<persons.at(i)->csvLine()<< endrow;;
 		}
 
-		for (auto const &pers : persons) {
-			std::string aux = pers->csvLine();
-			std::cout<<aux<<std::endl;
-			csv<<pers->csvLine()<< endrow;;
-		}
+		std::cout<<"\n"<<i<<" person tuples successfully written into file:\t"<<filename<<std::endl;
 
-		std::cout<<"\nentries successfully written into file:\t"<<filename<<std::endl;
+		for (i = 0; i< flats.size(); ++i)
+			csv<<flats.at(i)->csvLine()<< endrow;;
+
+		std::cout<<"\n"<<i<<" flat tuples successfully written into file:\t"<<filename<<std::endl;
 
 		}
 	catch (const std::exception& ex) {
@@ -239,23 +244,9 @@ std::vector<unsigned int> Storage::splitUInt(const std::string& str, const std::
     return tokens;
 }
 
-void Storage::deleteOwnerFromFlat(unsigned int flatId) {
-	unsigned int persId = flats.at(flatId)->getOwner();
-	persons.at(persId)-> removeFlat(flatId);
-	flats.at(flatId)->setOwner(persons.size()); // what a hack...but works by design...
-}
-
 void Storage::proceedInTime() {
 	double months = checkDouble("\nenter number of months to wait\n");
-    double amount;
 
-    // that's ugly...
-	for (auto &flat : flats){
-        amount = flat->updateProfit(months);
-
-        persons.at(flat->getRenter())->updateBalance(amount);
-        persons.at(flat->getRenter())->setMonthsInFlat(months);
-
-        persons.at(flat->getOwner())->updateBalance(amount);
-	}
+	for (auto &flat : flats)
+        flat-> updateProfit(months);
 }

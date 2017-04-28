@@ -28,7 +28,7 @@ void Whg::readProperties(std::vector<std::string> *values) {
 	this-> isAvailable = (values->at(1) == "1" ?  true : false);
 	this-> size = stod(values->at(2));
 	this-> prize = stod(values->at(3));
-	this-> ownerId = std::stoul(values->at(4));
-	this-> renterId = std::stoul(values->at(5));
+	//this-> ownerId = std::stoul(values->at(4));
+	//this-> renterId = std::stoul(values->at(5));
 	this-> category = values->at(6);
 }

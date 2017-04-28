@@ -15,7 +15,6 @@
 
 #include "../includes/Storage.h"
 
-
 class BaseMenu {
 	public:
 		BaseMenu();

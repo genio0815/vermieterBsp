@@ -10,6 +10,8 @@
 #include "../includes/Storage.h"
 
 Person::Person(){
+	age = 0;
+	id = 0;
 }
 
 void Person::setProperties() {
@@ -22,8 +24,19 @@ void Person::printToScreen(){
 }
 
 std::string Person::csvLine(){
-	return name + ';' + std::to_string(age);
+	return std::to_string(id) + ';' + name + ';' + std::to_string(age);
 }
 void Person::readProperties(std::vector<std::string> *) {
 }
 
+std::string Person::getName() {
+	return name;
+}
+
+void Person::setId(unsigned int id) {
+	this->id = id;
+}
+
+unsigned int Person::getId() {
+	return id;
+}

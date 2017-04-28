@@ -10,29 +10,25 @@
 
 #include <iomanip>
 #include <limits>
-#include<vector>
+#include <vector>
+#include <memory>
+
 #include "../includes/Person.h"
 
-// has to be public to pack it all into one vector of unique_ptr !!!
+class MietObject;
+
+// has to be public to pack it all into one vector!!!
 class Mieter: public Person {
 	public:
 		Mieter();
 		virtual void updateBalance(double);
-		double getBalance();
-		void setBalance(double);
 		void printToScreen();
-		const std::string& getBuerge() const;
-		void setBuerge(const std::string &);
 		void setProperties();
-		void setFlat(int);
-		int getFlat() const;
 		virtual std::string csvLine();
 		virtual void readProperties(std::vector<std::string> *);
 		void setMonthsInFlat(double);
-		double getMonthsInFlat();
 
 	private:
-		int flatIndex;
 		double monthsInFlat;
 		double expenses;
 		std::string buerge;

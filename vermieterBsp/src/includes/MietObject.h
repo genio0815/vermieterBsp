@@ -4,20 +4,21 @@
 // *  Created on: Mar 22, 2017
 // *      Author: alex
 // */
-//
-//#ifndef SRC_INCLUDES_MIETOBJECT_H_
-//#define SRC_INCLUDES_MIETOBJECT_H_
-//
 
 #pragma once
 
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
+
+#include "../includes/Person.h"
+#include "../includes/Vermieter.h"
+#include "../includes/Mieter.h"
 
 // forward declarations
-class Vermieter;
-class Mieter;
+//class Vermieter;
+//class Mieter;
 
 class MietObject {
 	public:
@@ -27,13 +28,12 @@ class MietObject {
 		virtual void setProperties();
 		virtual std::string csvLine();
 		virtual void readProperties(std::vector<std::string> *) {};
-		unsigned int getOwner();
-		unsigned int getRenter();
-		void setOwner(unsigned int ownerId);
-		void setRenter(unsigned int renterId);
-		void setProfit(double);
-		void getProfit(double);
-        double updateProfit(double);
+        void updateProfit(double);
+
+        void setRenterPtr(std::shared_ptr<Mieter>);
+        void setOwnerPtr(std::shared_ptr<Vermieter>);
+        std::shared_ptr<Mieter> getRenterPtr();
+        std::shared_ptr<Vermieter> getOwnerPtr();
 
 	protected:
 		std::string address;
@@ -41,9 +41,8 @@ class MietObject {
 		double prize;
 		double size;
 		double monthlyRate;
-		unsigned int ownerId;
-		unsigned int renterId;
         double profit;
-};
 
-//#endif
+        std::shared_ptr<Mieter> renter;
+        std::shared_ptr<Vermieter> owner;
+};

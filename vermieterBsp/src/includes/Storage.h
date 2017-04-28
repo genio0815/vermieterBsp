@@ -27,21 +27,20 @@ class Storage {
 		Storage();
 		static void listPersons();
 		static void listFlats();
-		static int addPerson();
-		static int addFlat();
+		static void addPerson();
+		static void addFlat();
 		static int checkInt(const std::string&, std::vector<int>*);
 		static double checkDouble(const std::string&);
 		static std::string checkString(const std::string&);
 		static bool checkBool(const std::string&);
 		static unsigned int checkUInt(const std::string&);
 		static void adoptVermieter(Vermieter*);
-		static std::vector<std::unique_ptr<Person> > persons;
-		static std::vector<std::unique_ptr<MietObject> > flats;
+		static std::vector<std::shared_ptr<Person> > persons;
+		static std::vector<std::shared_ptr<MietObject> > flats;
 		static void readCSV(const std::string&);
 		static void writeCSV(const std::string&);
 		static std::vector<std::string> split(const std::string& str, const std::string& delim);
 		static std::vector<unsigned int> splitUInt(const std::string& str, const std::string& delim);
-		static void deleteOwnerFromFlat(unsigned int);
 		static void proceedInTime();
 };
 

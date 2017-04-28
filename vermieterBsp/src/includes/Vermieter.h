@@ -9,10 +9,12 @@
 #define SRC_INCLUDES_VERMIETER_H_
 
 #include <vector>
+#include <memory>
 
+//#include "../includes/MietObject.h"
 #include "../includes/Person.h"
-#include "../includes/MietObject.h"
 
+class MietObject;
 
 // has to be public to pack it all into one vector of unique_ptr !!!
 class Vermieter: public Person {
@@ -22,16 +24,12 @@ class Vermieter: public Person {
 		double getBalance();
 		void setBalance(double);
 		void printToScreen();
-		void addFlat();
-		size_t numberFlat();
 		void setProperties();
 		std::string csvLine();
 		virtual void readProperties(std::vector<std::string> *);
-		void removeFlat(unsigned int);
 
 	private:
 		double income;
-		std::vector<unsigned int> ownedFlats; // stored via flats ID index
 };
 
 #endif

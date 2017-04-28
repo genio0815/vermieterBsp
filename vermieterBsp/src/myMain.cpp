@@ -5,12 +5,22 @@
  *      Author: alex
  */
 
+
+/* TODO: 	CSV export and import
+ * 			del person / flat
+ * 			change/ asign new mieter
+ */
+
+
 #include <limits>
 #include <memory> // for unique_ptr
 
-#include "includes/Haus.h"
-#include "includes/Mieter.h"
+#include "includes/Person.h"
 #include "includes/Vermieter.h"
+#include "includes/Mieter.h"
+#include "includes/Haus.h"
+
+#include "includes/MietObject.h"
 #include "includes/Menu.h"
 
 using namespace std;

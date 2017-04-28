@@ -9,6 +9,8 @@
 #include "../includes/Storage.h"
 
 Haus::Haus() : MietObject() {
+	floors = 0;
+	hasCellar = false;
 }
 
 void Haus::printToScreen() {
@@ -19,7 +21,6 @@ void Haus::printToScreen() {
 
 void Haus::setProperties() {
 	MietObject::setProperties();
-	//setConstuctionDate(Storage::checkString("enter Baujahr"));
 	this->constructionDate = Storage::checkString("enter Baujahr");
 	this->floors = Storage::checkUInt("Anzahl Stockwerke");
 	this->hasCellar = Storage::checkBool("hat Keller (0): No (1): Yes");
@@ -34,8 +35,8 @@ void Haus::readProperties(std::vector<std::string> *values) {
 	this->isAvailable = (values->at(1) == "1" ?  true : false);
 	this->size = std::stod(values->at(2));
 	this->prize = std::stod(values->at(3));
-	this->ownerId = std::stoul(values->at(4));
-	this->renterId = std::stoul(values->at(5));
+	//this->ownerId = std::stoul(values->at(4));
+	//this->renterId = std::stoul(values->at(5));
 	this->constructionDate = values->at(6);
 	this->floors = std::stoul(values->at(7));
 	this->hasCellar = (values->at(8) == "1" ?  true : false);
