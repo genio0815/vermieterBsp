@@ -11,7 +11,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <memory> // for unique_ptr
+#include <memory>
 
 #include "../includes/Storage.h"
 
@@ -23,7 +23,6 @@ class BaseMenu {
 		void printText();
 
 	protected:
-		std::vector<std::string> menuOptions;
 		std::vector<std::string> *optPt;
 };
 

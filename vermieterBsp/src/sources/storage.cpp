@@ -16,13 +16,16 @@ std::vector<std::shared_ptr<MietObject>> Storage::flats;
 Storage::Storage() {}
 
 void Storage::listPersons() {
-	int id = 0;
 	std::cout<<"\ncurrently stored persons:\n"<<std::endl;
 	for (auto const &pers : persons) {
 		std::cout<<std::setfill('-')<<std::setw(80)<<std::endl;
-		std::cout<<"\nperson ID "<<id++<<std::endl;
+		std::cout<<"\nperson ID "<<pers->getId()<<std::endl;
 		pers->printToScreen();
-		std::cout<<pers.use_count()<<std::endl;
+		if (pers->getType())
+			std::cout<<"owns "<<pers.use_count()-1<<" flat(s)"<<std::endl;
+		else
+			// now limited to just 1 !!!
+			std::cout<<"rents "<<pers.use_count()-1<<" flat(s)"<<std::endl;
 	}
 }
 
@@ -52,8 +55,8 @@ void Storage::addPerson() {
 		case 3:
 			return;
 	}
+	persons.back()->setId(persons.size()-1);
     persons.back()->setProperties();
-    persons.back()->setId(persons.size()-1);
 	return;
 }
 
@@ -77,7 +80,7 @@ void Storage::addFlat() {
 	return;
 }
 
-int Storage::checkInt(const std::string &text, std::vector<int> *opt = nullptr ) {
+int Storage::checkInt(const std::string &text, std::vector<int> *opt = nullptr) {
 	int intVal;
 	std::cout<<text<<std::endl;
 
@@ -136,7 +139,7 @@ unsigned int Storage::checkUInt(const std::string &text, std::vector<unsigned in
 
     if (opt != nullptr) {
         while(!(std::cin >> uintVal) || (std::find(opt->begin(), opt->end(), uintVal) == opt->end())) {
-            std::cerr<<"\ninvalid choice, please select of the following unsigned integers\n"<<std::endl;
+            std::cout<<"\ninvalid choice, please select of the following unsigned integers:"<<std::endl;
             for (auto &o : *opt) std::cout<<o<<' ';
             std::cout<<std::endl;
             std::cin.clear();
@@ -160,19 +163,18 @@ void Storage::writeCSV(const std::string &filename) {
 
 		for (i = 0; i< persons.size(); ++i) {
 			persons.at(i)->setId(i);
+			std::cout<<persons.at(i)->csvLine()<<std::endl;
 			csv<<persons.at(i)->csvLine()<< endrow;;
 		}
 
 		std::cout<<"\n"<<i<<" person tuples successfully written into file:\t"<<filename<<std::endl;
 
-
 		for (i = 0; i< flats.size(); ++i) {
-            std::cout<<flats.at(i)->csvLine();
+            std::cout<<flats.at(i)->csvLine()<<std::endl;
             csv << flats.at(i)->csvLine() << endrow;;
         }
 
 		std::cout<<"\n"<<i<<" flat tuples successfully written into file:\t"<<filename<<std::endl;
-
 		}
 	catch (const std::exception& ex) {
 		std::cout << "Exception was thrown: " << ex.what() << std::endl;
@@ -188,10 +190,10 @@ void Storage::readCSV(const std::string &filename) {
 		std::ifstream infile;
 		infile.open(filename);
 
-		while (std::getline(infile, aux, ';')) {
+		while (std::getline(infile, aux, ',')) {
 			type = stoi(aux);
 			std::getline(infile, aux);
-			values = split(aux,";");
+			values = split(aux,",");
 			switch (type) {
 				case 1:
 					persons.push_back(std::make_unique<Mieter>());
@@ -209,7 +211,6 @@ void Storage::readCSV(const std::string &filename) {
 					flats.push_back(std::make_unique<Whg>());
 					flats.back()->readProperties(&values);
 					break;
-
 			}
 		}
 		infile.close();
@@ -236,23 +237,6 @@ std::vector<std::string> Storage::split(const std::string& str, const std::strin
     for (std::string bla : tokens) {
     	std::cout<<bla<<std::endl;
     }
-
-    return tokens;
-}
-
-std::vector<unsigned int> Storage::splitUInt(const std::string& str, const std::string& delim) {
-	std::vector<unsigned int> tokens;
-    size_t prev = 0, pos = 0;
-    do
-    {
-        pos = str.find(delim, prev);
-        if (pos == std::string::npos) pos = str.length();
-        std::string token = str.substr(prev, pos-prev);
-        if (!token.empty()) tokens.push_back(std::stoul(token));
-        prev = pos + delim.length();
-    }
-    while (pos < str.length() && prev < str.length());
-
     return tokens;
 }
 
@@ -268,18 +252,33 @@ void Storage::changeOwner() {
 
     for (i = 0; i < persons.size(); ++i) {
         if (persons.at(i)->getType()) {  //Vermieter true
-            vermieterIds.push_back(flats.at(i)->getOwnerPtr()->getId());
+            vermieterIds.push_back(i);//(flats.at(i)->getOwnerPtr()->getId());
         }
     }
+
+    if (vermieterIds.size() == 0) {
+		std::cout<<"no renters present - returning"<<std::endl;
+		return;
+	}
 
     for (i =0; i < flats.size(); ++i) {
         flatIds.push_back(i);
     }
 
+    std::cout<<"available flats:"<<std::endl;
+    for (i = 0; i < flatIds.size(); ++i)
+    	std::cout<<flatIds.at(i)<<'\t'<<flats.at(i)->getAddress()<<std::endl;
+
     i = checkUInt("enter ID of flat to adopt:", &flatIds);
+
+    std::cout<<"available Vermieter:"<<std::endl;
+    for (k = 0; k < vermieterIds.size(); ++k)
+	    std::cout<<vermieterIds.at(k)<<'\t'<<persons.at(k)->getName()<<std::endl;
+
     k = checkUInt("select available Vermieter:", &vermieterIds);
 
-    std::cout<<"changing owner from "<<flats.at(i)->getOwnerPtr()->getName()<<" to " <<persons.at(k)->getName();
+    std::cout<<"changing owner from "<<(flats.at(i)->getOwnerPtr() == nullptr ? "NONE" : flats.at(i)->getOwnerPtr()->getName())<<" to "
+    		<<persons.at(k)->getName()<<std::endl;
     flats.at(i)->setOwnerPtr(std::static_pointer_cast<Vermieter> (persons.at(k)));
 }
 
@@ -295,25 +294,45 @@ void Storage::changeRenter() {
 
     for (i = 0; i < persons.size(); ++i) {
         if (!persons.at(i)->getType()) {  //Mieter false
-            renterIds.push_back(flats.at(i)->getRenterPtr()->getId());
+            renterIds.push_back(i);
         }
     }
 
-    for (i =0; i < flats.size(); ++i) {
-        flatIds.push_back(i);
+    if (renterIds.size() == 0) {
+    	std::cout<<"no renters present - returning"<<std::endl;
+    	return;
     }
 
-    i = checkUInt("enter ID of flat to dopt:", &flatIds);
-    k = checkUInt("select available Vermieter:", &renterIds);
+    // restrict Mieter to rent just one flat
+    std::cout<<"available flats:"<<std::endl;
+    for (i = 0; i < flatIds.size(); ++i) {
+    	if(flats.at(i)->getRenterPtr() != nullptr) {
+    		flatIds.push_back(i);
+    		std::cout<<flatIds.at(i)<<'\t'<<flats.at(i)->getAddress()<<"\trented by\t"<<flats.at(i)->getRenterPtr()->getName()<< std::endl;
+    	}
+    }
 
-    std::cout<<"changing owner from "<<flats.at(i)->getRenterPtr()->getName()<<" to " <<persons.at(k)->getName();
+    i = checkUInt("enter ID of flat to adopt:", &flatIds);
+    std::cout<<"available Mieter:"<<std::endl;
+    for (k = 0; k < renterIds.size(); ++k)
+   	    std::cout<<renterIds.at(k)<<'\t'<<persons.at(k)->getName()<<std::endl;
+
+    k = checkUInt("select available Mieter:", &renterIds);
+
+    //2804: added delete option
+    std::string token = Storage::checkString("to remove Mieter from flat enter REMOVE");
+    if (token.compare("REMOVE") == 0 ){
+    	std::cout<<"removing Mieter "<<persons.at(k)->getName()<<" from storage"<<std::endl;
+    	persons.erase(persons.begin()+k);
+    }
+
+    std::cout<<"changing renter from "<<(flats.at(i)->getRenterPtr() == nullptr ? "NONE" : flats.at(i)->getRenterPtr()->getName())
+    		<<" to " <<persons.at(k)->getName()<<std::endl;
     flats.at(i)->setRenterPtr(std::static_pointer_cast<Mieter> (persons.at(k)));
 }
 
-
 void Storage::proceedInTime() {
 	double months = checkDouble("\nenter number of months to wait\n");
-
 	for (auto &flat : flats)
         flat-> updateProfit(months);
 }

@@ -30,6 +30,8 @@ class MietObject {
 		virtual void readProperties(std::vector<std::string> *) {};
         void updateProfit(double);
 
+        std::string getAddress();
+
         void setRenterPtr(std::shared_ptr<Mieter>);
         void setOwnerPtr(std::shared_ptr<Vermieter>);
         std::shared_ptr<Mieter> getRenterPtr();
@@ -37,7 +39,6 @@ class MietObject {
 
 	protected:
 		std::string address;
-		bool isAvailable;
 		double prize;
 		double size;
 		double monthlyRate;

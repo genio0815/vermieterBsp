@@ -5,21 +5,14 @@
  *      Author: alex
  */
 
-
-/* TODO: 	CSV export and import
- * 			del person / flat
- * 			change/ asign new mieter
- */
-
-
 #include <limits>
-#include <memory> // for unique_ptr
-
+#include <memory>
 #include "includes/Person.h"
 #include "includes/Vermieter.h"
 #include "includes/Mieter.h"
 #include "includes/Haus.h"
 
+// fucking include guard mix up !!!
 #include "includes/MietObject.h"
 #include "includes/Menu.h"
 
@@ -50,7 +43,6 @@ void showMainMenu() {
 int main() {
 
 	showMainMenu();
-
 	return 0;
 }
 

@@ -15,7 +15,10 @@ MietObject::MietObject() {
 	size = 0.0;
 	profit = 0.0;
 	monthlyRate = 0.0;
-	isAvailable = true;
+}
+
+std::string MietObject::getAddress() {
+	return address;
 }
 
 void MietObject::printToScreen() {
@@ -30,62 +33,76 @@ void MietObject::printToScreen() {
 	else
 		std::cout<<"Mieter:\t"<<"NONE"<<std::endl;
 
-	std::cout<<"is Available:\t"<<(isAvailable ? "Yes" : "NO")<<std::endl;
 	std::cout<<"Addresse:\t"<<address<<std::endl;
 	std::cout<<"Groesse:\t"<<size<<std::endl;
 	std::cout<<"Preis:\t"<<prize<<std::endl;
+	std::cout<<"monatl. Miete\t"<<monthlyRate<<std::endl;
 }
 
 void MietObject::setProperties() {
 
+	unsigned int i;
+	std::string token;
+
+	// change 2804: new MieterObject HAS to be associated to a Vermieter
+
+	std::cout<<"new flats have to be assigned to a owner\n"<<std::endl;
+	token = Storage::checkString("to assign to existing owner enter YES, else create a new owner");
+
+	if (token.compare("YES") == 0) {
+		if (Storage::persons.size() > 0) {
+			std::vector<unsigned int> existingVermieters;
+			std::cout<<"existing Owners:\n"<<std::endl;
+			for (i = 0; i< Storage::persons.size(); ++i) {
+				if(Storage::persons.at(i)->getType()) {
+					existingVermieters.push_back(i);
+					std::cout<<Storage::persons.at(i)-> getName()<<std::endl;
+				}
+			}
+			if (existingVermieters.size() == 0) {
+				std::cout<<"currently no owners present - returning\n"<<std::endl;
+				return;
+			} else {
+				std::cout<<"available owners:\n"<<std::endl;
+				for (i = 0; i< existingVermieters.size();++i) {
+					std::cout<<"ID: "<<i<<' '<<Storage::persons.at(i)->getName()<<std::endl;
+				}
+				i = Storage::checkUInt("enter ID of owner", &existingVermieters);
+				owner = std::static_pointer_cast<Vermieter>(Storage::persons.at(i));
+			}
+		} else {
+			std::cout<<"no owners present - returning\n"<<std::endl;
+			return;
+		}
+	} else {
+		std::cout<<"creating new owner, who will be assigned to flat"<<std::endl;
+		Storage::persons.push_back(std::make_shared<Vermieter>());
+		Storage::persons.back()->setId(Storage::persons.size()-1);
+		Storage::persons.back()->setProperties();
+		std::cout<<"\nproceeding with flat properties !!!\n"<<std::endl;
+		owner = std::static_pointer_cast<Vermieter>(Storage::persons.back());
+	}
+
 	address = Storage::checkString("enter Address");
 	size = Storage::checkDouble("enter size");
 	prize = Storage::checkDouble("enter prize");
-
-	/*std::string token;
-
-	if (Storage::persons.size() > 0) {
-		token = Storage::checkString("to assign existing Vermieter enter: YES");
-		if (token.compare("YES") == 0) {
-			// just to check if valid index is entered
-			std::vector<int> existingPersons;
-			for (unsigned int i = 0; i< Storage::persons.size(); ++i) {
-				existingPersons.push_back(int(i));
-			}
-
-	} else {
-		token = Storage::checkString("to add a new flat enter: NEW\n(currently no flats present)\notherwise continue");
-	}
-
-	if (token.compare("NEW") == 0) {
-		Storage::addFlat();
-	} else if (token.compare("EX") == 0) {
-		if (Storage::flats.size() > 0) {
-			// just to check if valid index is entered
-			std::vector<int> existingFlats;
-			for (unsigned int i = 0; i< Storage::flats.size(); ++i) {
-				existingFlats.push_back(int(i));
-			}
-			token = Storage::checkString("\nto list existing flats enter: YES");
-			if (token.compare("YES") == 0) Storage::listFlats();
-			int index = Storage::checkInt("enter flat ID",&existingFlats);
-			Storage::flats.at(index)->setRenterPtr(std::make_shared<Mieter>(*this));
-		}
-	}
-*/
-
-	//TODO
-	//ownerId = Storage::checkUInt("enter Vermieter Id");
-	//renterId = Storage::checkUInt("enter Mieter Id");
+	monthlyRate = Storage::checkDouble("enter monthly rate:");
 }
 
 std::string MietObject::csvLine() {
 
 	std::string res;
-	res = address +';' + std::to_string(isAvailable)+ ';'  + std::to_string(size) + ';' + std::to_string(prize);
+	res = address +',' + std::to_string(size) + ',' + std::to_string(prize) + ',' + std::to_string(monthlyRate);
 
-	if (owner != nullptr) res += ';' + std::to_string(owner->getId());
-	if (renter != nullptr) res +=  ';' + std::to_string(renter->getId());
+	if (owner != nullptr)
+		res += ',' + std::to_string(owner->getId());
+	else
+		res += ",NONE";
+
+	if (renter != nullptr)
+		res +=  ',' + std::to_string(renter->getId());
+	else
+		res += ",NONE";
 
 	return res;
 }
@@ -105,7 +122,7 @@ void MietObject::setOwnerPtr(std::shared_ptr<Vermieter> own) {
 }
 
 void MietObject::updateProfit(double time){
-    if (!isAvailable) {
+    if (renter != nullptr) {
         profit += monthlyRate * time;
         owner-> updateBalance(profit);
         renter-> updateBalance(profit);

@@ -16,6 +16,7 @@ Mieter::Mieter() : Person() {
 }
 
 void Mieter::updateBalance(double exp){
+	std::cout<<"update "<<exp<<std::endl;
 	expenses += exp;
 }
 void Mieter::printToScreen(){
@@ -26,42 +27,53 @@ void Mieter::printToScreen(){
 }
 
 void Mieter::setProperties() {
-	Person::setProperties();
-	buerge = Storage::checkString("enter Buerge");
+
+	unsigned int i;
 	std::string token;
 
+	// change 2804: new Mieter HAS to be assigned ONLY to existing flat
+	std::cout<<"new Renter have to be assigned to existing flats"<<std::endl;
 	if (Storage::flats.size() > 0) {
-		token = Storage::checkString("to add a new flat enter: NEW\nto asign existing flat via its ID enter EX\notherwise continue");
-	} else {
-		token = Storage::checkString("to add a new flat enter: NEW\n(currently no flats present)\notherwise continue");
-	}
-
-	if (token.compare("NEW") == 0) {
-		Storage::addFlat();
-	} else if (token.compare("EX") == 0) {
-		if (Storage::flats.size() > 0) {
-			// just to check if valid index is entered
-			std::vector<int> existingFlats;
-			for (unsigned int i = 0; i< Storage::flats.size(); ++i) {
-				existingFlats.push_back(int(i));
+		std::vector<unsigned int> existingFlats;
+		std::cout<<"available flats:\n"<<std::endl;
+		for (i = 0; i< Storage::flats.size(); ++i) {
+			if(Storage::flats.at(i)-> getRenterPtr() == nullptr) {
+				existingFlats.push_back(i);
+				std::cout<<"ID: "<<i<<'\t'<<Storage::flats.at(i)-> getAddress()<<std::endl;
 			}
-			token = Storage::checkString("\nto list existing flats enter: YES");
-			if (token.compare("YES") == 0) Storage::listFlats();
-			int index = Storage::checkInt("enter flat ID",&existingFlats);
-			Storage::flats.at(index)->setRenterPtr(std::make_shared<Mieter>(*this));
 		}
+		if (existingFlats.size() == 0) {
+			std::cout<<"sorry, currently no flats available..."<<std::endl;
+			return;
+		}
+
+		std::cout<<std::endl;
+		i = Storage::checkUInt("enter flat ID",&existingFlats);
+		// flats.at(i)->setRenterPtr(std::static_pointer_cast<Mieter> (persons.at(k)));
+		 //flats.at(i)->setRenterPtr(std::static_pointer_cast<Mieter> (persons.at(k)));
+		//Storage::flats.at(i)->setRenterPtr(std::make_shared<Mieter>(*this));
+		Storage::flats.at(i)->setRenterPtr(std::static_pointer_cast<Mieter>(Storage::persons.back()));
+
+		std::cout<<"assigned flat, continue with renter properties\n"<<std::endl;
+
+		Person::setProperties();
+		buerge = Storage::checkString("enter Buerge");
+
+	} else {
+		std::cout<<"no flats present..."<<std::endl;
 	}
 }
 
 std::string Mieter::csvLine(){
-	return "1;" + Person::csvLine() + ';' + buerge + ';' + std::to_string(expenses);
+	return "1," + Person::csvLine() + ',' + buerge + ',' + std::to_string(expenses) + ',' + std::to_string(monthsInFlat);
 }
 void Mieter::readProperties(std::vector<std::string> *values) {
-	this-> name = values->at(0);
-	this-> age = std::stoul(values->at(1));
-	this-> buerge = values->at(2);
-	this-> expenses = std::stod(values->at(3));
-	//setFlat(std::stoi(values->at(4)));
+	this -> id = std::stoul(values->at(0));
+	this-> name = values->at(1);
+	this-> age = std::stoul(values->at(2));
+	this-> buerge = values->at(3);
+	this-> expenses = std::stod(values->at(4));
+	this-> monthsInFlat = std::stod(values->at(5));
 }
 
 void Mieter::setMonthsInFlat(double months){

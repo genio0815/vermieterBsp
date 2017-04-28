@@ -17,16 +17,18 @@ class Person {
 		Person();
 
 		std::string getName();
+		// just for csv file I/O
 		void setId(unsigned int);
 		unsigned int getId();
 
-		// virtual (get reused & expanded in derived):
+		// virtual (get reused & expanded in derived)
+		// for dynamic/ late binding:
 		virtual void printToScreen();
 		virtual ~Person() {}; // quick & dirty
 		virtual void setProperties();
 		virtual std::string csvLine();
 
-		// pure virtual (have to be implemented in derived):
+		// pure virtual (to be implemented in derived):
 		virtual void readProperties(std::vector<std::string> *) = 0;
 		virtual void updateBalance(double) = 0;
 

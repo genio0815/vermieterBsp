@@ -24,9 +24,7 @@ void Person::printToScreen(){
 }
 
 std::string Person::csvLine(){
-	return std::to_string(id) + ';' + name + ';' + std::to_string(age);
-}
-void Person::readProperties(std::vector<std::string> *) {
+	return std::to_string(id) + ',' + name + ',' + std::to_string(age);
 }
 
 std::string Person::getName() {
