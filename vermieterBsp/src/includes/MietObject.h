@@ -27,9 +27,9 @@ class MietObject {
 		virtual void printToScreen();
 		virtual void setProperties();
 		virtual std::string csvLine();
-		virtual void readProperties(std::vector<std::string> *) {};
-        void updateProfit(double);
+		virtual void readProperties(std::vector<std::string> *, unsigned int) = 0;
 
+        void updateProfit(double);
         std::string getAddress();
 
         void setRenterPtr(std::shared_ptr<Mieter>);

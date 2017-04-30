@@ -16,7 +16,6 @@ Mieter::Mieter() : Person() {
 }
 
 void Mieter::updateBalance(double exp){
-	std::cout<<"update "<<exp<<std::endl;
 	expenses += exp;
 }
 void Mieter::printToScreen(){
@@ -49,9 +48,6 @@ void Mieter::setProperties() {
 
 		std::cout<<std::endl;
 		i = Storage::checkUInt("enter flat ID",&existingFlats);
-		// flats.at(i)->setRenterPtr(std::static_pointer_cast<Mieter> (persons.at(k)));
-		 //flats.at(i)->setRenterPtr(std::static_pointer_cast<Mieter> (persons.at(k)));
-		//Storage::flats.at(i)->setRenterPtr(std::make_shared<Mieter>(*this));
 		Storage::flats.at(i)->setRenterPtr(std::static_pointer_cast<Mieter>(Storage::persons.back()));
 
 		std::cout<<"assigned flat, continue with renter properties\n"<<std::endl;
@@ -67,8 +63,8 @@ void Mieter::setProperties() {
 std::string Mieter::csvLine(){
 	return "1," + Person::csvLine() + ',' + buerge + ',' + std::to_string(expenses) + ',' + std::to_string(monthsInFlat);
 }
-void Mieter::readProperties(std::vector<std::string> *values) {
-	this -> id = std::stoul(values->at(0));
+void Mieter::readProperties(std::vector<std::string> *values, unsigned int shift) {
+	this -> id = std::stoul(values->at(0)) + shift;
 	this-> name = values->at(1);
 	this-> age = std::stoul(values->at(2));
 	this-> buerge = values->at(3);

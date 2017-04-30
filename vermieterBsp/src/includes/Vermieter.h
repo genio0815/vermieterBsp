@@ -22,7 +22,7 @@ class Vermieter: public Person {
 		void printToScreen();
 		void setProperties();
 		std::string csvLine();
-		virtual void readProperties(std::vector<std::string> *);
+		virtual void readProperties(std::vector<std::string> *, unsigned int);
 
 		virtual bool getType() {return true;};
 

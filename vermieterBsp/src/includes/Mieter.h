@@ -25,7 +25,7 @@ class Mieter: public Person {
 		void printToScreen();
 		void setProperties();
 		virtual std::string csvLine();
-		virtual void readProperties(std::vector<std::string> *);
+		virtual void readProperties(std::vector<std::string> *, unsigned int);
 		void setMonthsInFlat(double);
 
 		virtual bool getType() {return false;};

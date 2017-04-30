@@ -161,8 +161,11 @@ void Storage::writeCSV(const std::string &filename) {
 	try {
 		csvfile csv(filename);
 
+		// persons have to be written and hence exist first
+		// otherwise flats owner or renter ptr assigning might crash !!!
+
 		for (i = 0; i< persons.size(); ++i) {
-			persons.at(i)->setId(i);
+			persons.at(i)->setId(i); //resetting id for proper I/O
 			std::cout<<persons.at(i)->csvLine()<<std::endl;
 			csv<<persons.at(i)->csvLine()<< endrow;;
 		}
@@ -183,38 +186,47 @@ void Storage::writeCSV(const std::string &filename) {
 
 void Storage::readCSV(const std::string &filename) {
 	try {
-
-		int type;
+		int type, count;
 		std::vector<std::string> values;
 		std::string aux;
-		std::ifstream infile;
-		infile.open(filename);
+
+		std::ifstream infile(filename);
+		if (!infile) {
+			std::cout<<"file "<<filename<< " does not exist! - returning..."<<std::endl;
+			return;
+		}
+
+		// 2904: adopting read in persons Ids
+		unsigned int shiftPersId = persons.size();
+
+		count = 0;
 
 		while (std::getline(infile, aux, ',')) {
 			type = stoi(aux);
 			std::getline(infile, aux);
+			count++;
 			values = split(aux,",");
 			switch (type) {
 				case 1:
 					persons.push_back(std::make_unique<Mieter>());
-					persons.back()->readProperties(&values);
+					persons.back()->readProperties(&values, shiftPersId);
 					break;
 				case 2:
 					persons.push_back(std::make_unique<Vermieter>());
-					persons.back()->readProperties(&values);
+					persons.back()->readProperties(&values, shiftPersId);
 					break;
 				case 3:
 					flats.push_back(std::make_unique<Haus>());
-					flats.back()->readProperties(&values);
+					flats.back()->readProperties(&values, shiftPersId);
 					break;
 				case 4:
 					flats.push_back(std::make_unique<Whg>());
-					flats.back()->readProperties(&values);
+					flats.back()->readProperties(&values, shiftPersId);
 					break;
 			}
 		}
 		infile.close();
-		std::cout<<"\nentries successfully read from file:\t"<<filename<<std::endl;
+		std::cout<<'\n'<<count<<" entries successfully read from file:\t"<<filename<<std::endl;
 		}
 	catch (const std::exception& ex) {
 		std::cout << "Exception was thrown: " << ex.what() << std::endl;
@@ -234,9 +246,6 @@ std::vector<std::string> Storage::split(const std::string& str, const std::strin
     }
     while (pos < str.length() && prev < str.length());
 
-    for (std::string bla : tokens) {
-    	std::cout<<bla<<std::endl;
-    }
     return tokens;
 }
 
@@ -252,7 +261,7 @@ void Storage::changeOwner() {
 
     for (i = 0; i < persons.size(); ++i) {
         if (persons.at(i)->getType()) {  //Vermieter true
-            vermieterIds.push_back(i);//(flats.at(i)->getOwnerPtr()->getId());
+            vermieterIds.push_back(i);
         }
     }
 

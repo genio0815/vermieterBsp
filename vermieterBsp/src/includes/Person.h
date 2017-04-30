@@ -29,7 +29,7 @@ class Person {
 		virtual std::string csvLine();
 
 		// pure virtual (to be implemented in derived):
-		virtual void readProperties(std::vector<std::string> *) = 0;
+		virtual void readProperties(std::vector<std::string> *, unsigned int) = 0;
 		virtual void updateBalance(double) = 0;
 
 		// ugly but needed

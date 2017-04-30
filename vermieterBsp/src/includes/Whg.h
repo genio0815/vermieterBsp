@@ -14,7 +14,7 @@ public:
     void virtual printToScreen();
     virtual std::string csvLine();
     virtual void setProperties();
-    virtual void readProperties(std::vector<std::string> *);
+    virtual void readProperties(std::vector<std::string> *, unsigned int);
 
 private:
     std::string category;

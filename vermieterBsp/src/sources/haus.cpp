@@ -15,6 +15,7 @@ Haus::Haus() : MietObject() {
 
 void Haus::printToScreen() {
 	MietObject::printToScreen();
+	std::cout<<"object type:\tHAUS"<<std::endl;
 	std::cout<<"number floors:\t"<<floors<<"\thas cellar\t"<<hasCellar<<std::endl;
 	std::cout<<"construction date:\t"<<constructionDate<<std::endl;
 }
@@ -31,7 +32,8 @@ std::string Haus::csvLine() {
 	return "3," + MietObject::csvLine() + ',' + constructionDate + ',' + std::to_string(floors) + ',' + std::to_string(hasCellar);
 }
 
-void Haus::readProperties(std::vector<std::string> *values) {
+void Haus::readProperties(std::vector<std::string> *values, unsigned int shift) {
+	unsigned int index;
 	this->address = values->at(0);
 	this->size = std::stod(values->at(1));
 	this->prize = std::stod(values->at(2));
@@ -40,15 +42,15 @@ void Haus::readProperties(std::vector<std::string> *values) {
 	if (values->at(4) == "NONE") {
 		this->owner = nullptr;
 	} else {
-		unsigned int i = (std::stoul(values->at(4)));
-		this->owner = std::static_pointer_cast<Vermieter>(Storage::persons.at(i));
+		index = (std::stoul(values->at(4)));
+		this->owner = std::static_pointer_cast<Vermieter>(Storage::persons.at(index + shift));
 	}
 
 	if (values->at(5) == "NONE") {
 		this->renter = nullptr;
 	} else {
-		unsigned int i = (std::stoul(values->at(5)));
-		this->renter = std::static_pointer_cast<Mieter>(Storage::persons.at(i));
+		index = (std::stoul(values->at(5)));
+		this->renter = std::static_pointer_cast<Mieter>(Storage::persons.at(index + shift));
 	}
 
 	this->constructionDate = values->at(6);

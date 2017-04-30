@@ -58,8 +58,8 @@ std::string Vermieter::csvLine() {
 	return "2," + Person::csvLine() + ',' + std::to_string(income);
 }
 
-void Vermieter::readProperties(std::vector<std::string> *values) {
-	this -> id = std::stoul(values->at(0));
+void Vermieter::readProperties(std::vector<std::string> *values, unsigned int shift) {
+	this -> id = std::stoul(values->at(0)) + shift;
 	this-> name = values->at(1);
 	this-> age = std::stoul(values->at(2));
 	this -> income = std::stod(values->at(3));

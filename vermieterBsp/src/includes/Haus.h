@@ -18,7 +18,7 @@ class Haus: public MietObject {
 		virtual ~Haus(){};
 		virtual void printToScreen();
 		virtual std::string csvLine();
-		virtual void readProperties(std::vector<std::string> *);
+		virtual void readProperties(std::vector<std::string> *, unsigned int);
 		virtual void setProperties();
 
 	private:
